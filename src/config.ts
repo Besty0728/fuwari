@@ -107,8 +107,11 @@ export const imageFallbackConfig: ImageFallbackConfig = {
 
 export const umamiConfig: UmamiConfig = {
 	enable: true,
-	baseUrl: "https://cloud.umami.is/share/apMRm7cxgN6NYxAr/micostar.tech",
-	shareId: "ZyDjOrmjaBTlmGtd",
+	// 注意：实际的 Umami 脚本已在 Layout.astro 中配置
+	// Script URL: https://umami.micostar.tech/script.js
+	// Website ID: 46580811-c547-4c3a-b5d9-69ec82ae6e80
+	baseUrl: "https://umami.micostar.tech", // Umami 服务器地址
+	shareId: "46580811-c547-4c3a-b5d9-69ec82ae6e80", // 网站 ID
 	timezone: "Asia/Shanghai",
 };
 
