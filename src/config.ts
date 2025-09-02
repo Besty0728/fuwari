@@ -10,9 +10,8 @@ import type {
 import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
-	title: "AcoFork Blog",
-	description:
-		"分享网络技术、服务器部署、内网穿透、静态网站搭建、CDN优化、容器化部署等技术教程与实践经验的个人技术博客，专注于云原生、无服务器架构和前后端开发，作者为afoim/二叉树树",
+	title: "Micostar Blog",
+	description: "分享网络技术、服务器部署、Unity开发、AI技术应用与原理、作者为流转星(Betsy)",
 
 	keywords: [],
 	lang: "zh_CN", // 'en', 'zh_CN', 'zh_TW', 'ja', 'ko', 'es', 'th'
@@ -30,12 +29,12 @@ export const siteConfig: SiteConfig = {
 			enable: true, // Display the credit text of the banner image
 			text: "Pixiv @chokei", // Credit text to be displayed
 
-			url: "https://www.pixiv.net/artworks/122782209", // (Optional) URL link to the original artwork or artist's page
+			url: "https://image.ai0728.com.cn/random?type=img&dir=package", // (Optional) URL link to the original artwork or artist's page
 		},
 	},
 	background: {
 		enable: true, // Enable background image
-		src: "https://eopageapi.2x.nz/pic?img=ua", // Background image URL (supports HTTPS)
+		src: "https://image.ai0728.com.cn/random?type=img&dir=package", // Background image URL (supports HTTPS)
 		position: "center", // Background position: 'top', 'center', 'bottom'
 		size: "cover", // Background size: 'cover', 'contain', 'auto'
 		repeat: "no-repeat", // Background repeat: 'no-repeat', 'repeat', 'repeat-x', 'repeat-y'
@@ -49,11 +48,12 @@ export const siteConfig: SiteConfig = {
 	favicon: [
 		// Leave this array empty to use the default favicon
 		{
-			src: "https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&spec=0", // Path of the favicon, relative to the /public directory
+			src: "https://image.ai0728.com.cn/file/CF/1756734381495_58fc963052f0a5cd8ce123b8d10c4a53.jpg", // Path of the favicon, relative to the /public directory
 			//   theme: 'light',              // (Optional) Either 'light' or 'dark', set only if you have different favicons for light and dark mode
 			//   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
 		},
 	],
+	subtitle: ""
 };
 
 export const navBarConfig: NavBarConfig = {
@@ -62,42 +62,32 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Archive,
 		LinkPreset.About,
 		{
-			name: "友链",
-			url: "/friends/", // Internal links should not include the base path, as it is automatically added
-			external: false, // Show an external link icon and will open in a new tab
-		},
-		{
 			name: "赞助",
 			url: "/donate/", // Internal links should not include the base path, as it is automatically added
 			external: false, // Show an external link icon and will open in a new tab
 		},
 		{
 			name: "统计",
-			url: "https://umami.2x.nz/share/ZyDjOrmjaBTlmGtd", // Internal links should not include the base path, as it is automatically added
-			external: true, // Show an external link icon and will open in a new tab
-		},
-		{
-			name: "状态",
-			url: "https://ss.2x.nz/", // Internal links should not include the base path, as it is automatically added
+			url: "https://cloud.umami.is/share/apMRm7cxgN6NYxAr/micostar.tech", // Internal links should not include the base path, as it is automatically added
 			external: true, // Show an external link icon and will open in a new tab
 		},
 	],
 };
 
 export const profileConfig: ProfileConfig = {
-	avatar: "https://q2.qlogo.cn/headimg_dl?dst_uin=2726730791&spec=0", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-	name: "二叉树树",
-	bio: "你往小腹下探探有棍你就倒倒有豆你就点点比网站好玩🥰",
+	avatar: "https://image.ai0728.com.cn/file/CF/1756734381495_58fc963052f0a5cd8ce123b8d10c4a53.jpg", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+	name: "流转星(Betsy)",
+	bio: "爱我所爱，我们是彼此永远的动力",
 	links: [
 		{
 			name: "Bilibli",
 			icon: "fa6-brands:bilibili",
-			url: "https://space.bilibili.com/325903362",
+			url: "https://space.bilibili.com/420378171",
 		},
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
-			url: "https://github.com/afoim",
+			url: "https://github.com/Besty0728",
 		},
 	],
 };
@@ -108,15 +98,16 @@ export const licenseConfig: LicenseConfig = {
 	url: "https://creativecommons.org/licenses/by-nc-sa/4.0/",
 };
 
+//图片回退
 export const imageFallbackConfig: ImageFallbackConfig = {
 	enable: true,
-	originalDomain: "eo-r2.2x.nz",
-	fallbackDomain: "pub-d433ca7edaa74994b3d7c40a7fd7d9ac.r2.dev",
+	originalDomain: "image.ai0728.com.cn",           // 主力图床
+	fallbackDomain: "image.cloudrunmax.top",         // R2备用图床
 };
 
 export const umamiConfig: UmamiConfig = {
 	enable: true,
-	baseUrl: "https://umami.2x.nz",
+	baseUrl: "https://cloud.umami.is/share/apMRm7cxgN6NYxAr/micostar.tech",
 	shareId: "ZyDjOrmjaBTlmGtd",
 	timezone: "Asia/Shanghai",
 };
