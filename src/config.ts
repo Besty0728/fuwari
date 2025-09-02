@@ -107,11 +107,8 @@ export const imageFallbackConfig: ImageFallbackConfig = {
 
 export const umamiConfig: UmamiConfig = {
 	enable: true,
-	// 注意：实际的 Umami 脚本已在 Layout.astro 中配置
-	// Script URL: https://umami.micostar.tech/script.js
-	// Website ID: 46580811-c547-4c3a-b5d9-69ec82ae6e80
-	baseUrl: "https://umami.micostar.tech", // Umami 服务器地址
-	shareId: "46580811-c547-4c3a-b5d9-69ec82ae6e80", // 网站 ID
+	baseUrl: "https://cloud.umami.is/share/Ly5RD4PNG2SJRx2i/www.micostar.tech",
+	shareId: "ZyDjOrmjaBTlmGtd",
 	timezone: "Asia/Shanghai",
 };
 
