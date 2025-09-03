@@ -68,7 +68,7 @@ export const navBarConfig: NavBarConfig = {
 		},
 		{
 			name: "统计",
-			url: "https://cloud.umami.is/share/apMRm7cxgN6NYxAr/micostar.tech", // Internal links should not include the base path, as it is automatically added
+			url: "https://us.umami.is/share/Ly5RD4PNG2SJRx2i/www.micostar.tech", // External Umami share dashboard
 			external: true, // Show an external link icon and will open in a new tab
 		},
 	],
@@ -107,7 +107,7 @@ export const imageFallbackConfig: ImageFallbackConfig = {
 
 export const umamiConfig: UmamiConfig = {
 	enable: true,
-	baseUrl: "https://cloud.umami.is/share/Ly5RD4PNG2SJRx2i/www.micostar.tech",
+	baseUrl: "https://us.umami.is/share/Ly5RD4PNG2SJRx2i/www.micostar.tech",
 	timezone: "Asia/Shanghai",
 };
 
