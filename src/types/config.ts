@@ -88,7 +88,8 @@ export type ImageFallbackConfig = {
 export type UmamiConfig = {
 	enable: boolean;
 	baseUrl: string;
-	shareId: string;
+	// Optional: only needed if your implementation requires a separate share route ID
+	shareId?: string;
 	timezone: string;
 };
 

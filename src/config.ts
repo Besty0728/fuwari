@@ -108,7 +108,6 @@ export const imageFallbackConfig: ImageFallbackConfig = {
 export const umamiConfig: UmamiConfig = {
 	enable: true,
 	baseUrl: "https://cloud.umami.is/share/Ly5RD4PNG2SJRx2i/www.micostar.tech",
-	shareId: "ZyDjOrmjaBTlmGtd",
 	timezone: "Asia/Shanghai",
 };
 
