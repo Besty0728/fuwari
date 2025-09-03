@@ -7,12 +7,14 @@ interface Props {
 	alt?: string;
 	position?: string;
 	basePath?: string;
+    fit?: "cover" | "contain"; // how image should fit its container
+    dim?: boolean; // whether to render the dim overlay layer
 }
 import { Image } from "astro:assets";
 import { url } from "../../utils/url-utils";
 import { imageFallbackConfig, siteConfig } from "../../config";
 
-const { id, src, alt, position = "center", basePath = "/" } = Astro.props;
+const { id, src, alt, position = "center", basePath = "/", fit = "cover", dim = true } = Astro.props;
 const className = Astro.props.class;
 
 const isLocal = !(
@@ -43,7 +45,7 @@ if (isLocal) {
 	img = await file();
 }
 
-const imageClass = "w-full h-full object-cover";
+const imageClass = `w-full h-full object-${fit}`;
 const imageStyle = `object-position: ${position}`;
 ---
 <div id={id} class:list={[className, 'overflow-hidden relative image-wrapper']} style={`--theme-hue: ${siteConfig.themeColor.hue}`}>
@@ -53,7 +55,7 @@ const imageStyle = `object-position: ${position}`;
     </div>
     
     <!-- 图片内容 -->
-    <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>
+    {dim && <div class="transition absolute inset-0 dark:bg-black/10 bg-opacity-50 pointer-events-none"></div>}
     {isLocal && img && <Image src={img} alt={alt || ""} class={`${imageClass} image-content opacity-0 transition-opacity duration-500`} style={imageStyle} onload="this.style.opacity='1'; this.parentElement.querySelector('.loading-bar').style.opacity='0';"/>}
     {!isLocal && (
         imageFallbackConfig.enable && src.includes(imageFallbackConfig.originalDomain) ? 

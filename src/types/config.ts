@@ -1,3 +1,10 @@
+export type AppItem = {
+	name: string;
+	url: string;
+	image: string; // public/ 路径或完整 URL
+	description?: string;
+	external?: boolean; // 外链则新标签打开
+};
 import type { AUTO_MODE, DARK_MODE, LIGHT_MODE } from "@constants/constants";
 
 export type SiteConfig = {
@@ -38,6 +45,12 @@ export type SiteConfig = {
 	};
 
 	favicon: Favicon[];
+
+	// Optional URL for the Apps page redirect target
+	appRedirectUrl?: string;
+
+	// 应用卡片数据（用于 /apps 页面）
+	apps?: AppItem[];
 };
 
 export type Favicon = {

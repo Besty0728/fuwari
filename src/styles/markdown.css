@@ -24,8 +24,8 @@
         before:ease-out before:transition active:bg-none hover:before:bg-[var(--btn-plain-bg-hover)] active:before:bg-[var(--btn-plain-bg-active)] z-0
         before:absolute before:rounded-[inherit] before:inset-0 before:scale-[0.85] hover:before:scale-100 before:-z-10
         underline decoration-[var(--link-underline)] decoration-1 decoration-dashed underline-offset-4;
-        box-decoration-break: clone;
         -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
     
         &:hover, &:active {
             @apply decoration-transparent;
@@ -62,7 +62,8 @@
 
     .copy-btn {
         all: initial;
-        @apply btn-regular-dark opacity-0 shadow-lg shadow-black/50 absolute active:scale-90 h-8 w-8 top-3 right-3 text-sm rounded-lg transition-all ease-in-out z-20 cursor-pointer;
+        @apply opacity-0 shadow-lg shadow-black/50 absolute active:scale-90 h-8 w-8 top-3 right-3 text-sm rounded-lg transition-all ease-in-out z-20 cursor-pointer
+               bg-white/10 dark:bg-white/10 hover:bg-white/20 text-white ring-1 ring-white/20 backdrop-blur-sm;
     }
     .frame:hover .copy-btn {
         opacity: 1;

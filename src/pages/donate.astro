@@ -90,109 +90,8 @@ import { Icon } from "astro-icon/components";
                         <span class="font-semibold text-black dark:text-white">关注订阅</span>
                     </div>
                     <p class="text-sm text-black/60 dark:text-white/60">
-                        订阅RSS或关注社交媒体
+                        关注社交媒体
                     </p>
-                </div>
-            </div>
-        </div>
-        <div class="sponsors-section card-base p-6">
-            <h2 class="text-xl font-bold text-black dark:text-white mb-3 flex items-center gap-2">
-                <Icon name="material-symbols:group" class="text-[1.5rem] text-[var(--primary)]"></Icon>
-                <span>已赞助的小伙伴</span>
-            </h2>
-            <p class="text-sm text-black/60 dark:text-white/60 mb-4">
-            如果您已赞助，并且想加入赞助名单，请自行提交PR <a target="_blank" href="https://github.com/afoim/fuwari/blob/main/src/pages/donate.astro" class="transition link text-[var(--primary)] font-medium underline">点击这里提交</a>
-            </p>
-            <div class="sponsors-grid">
-            <!-- 已赞助的小伙伴 -->
-
-                <div class="sponsor-card">
-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-[var(--card-bg)] border border-black/10 dark:border-white/10">
-                        <!-- 本地头像示例（需要将头像放在 public/donate/ 目录下） -->
-                        <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
-                            <!-- 如果有本地头像文件，使用: <img src="/donate/user1.jpg" alt="用户头像" loading="lazy" class="w-full h-full object-cover" /> -->
-                            <!-- 如果没有头像文件，显示默认图标 -->
-                            <!-- <Icon name="material-symbols:person" class="text-gray-500 dark:text-gray-400 text-[1.2rem]"> -->
-                            <img src="/donate/mjt.jpg" alt="" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-black dark:text-white text-sm">明镜台</h4>
-                            <p class="text-xs text-black/60 dark:text-white/60">2025-08-02</p>
-                        </div>
-                        <div class="text-xs text-[var(--primary)] font-medium">100 ￥</div>
-                    </div>
-                </div>
-                <div class="sponsor-card">
-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-[var(--card-bg)] border border-black/10 dark:border-white/10">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
-                        	<img src="https://blog.yeqing.net/favicon.ico" alt="" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-black dark:text-white text-sm">夜轻</h4>
-                            <p class="text-xs text-black/60 dark:text-white/60">2025-07-11</p>
-                        </div>
-                        <div class="text-xs text-[var(--primary)] font-medium">78 ￥</div>
-                    </div>
-                </div>
-                <div class="sponsor-card">
-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-[var(--card-bg)] border border-black/10 dark:border-white/10">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
-                            <img src="https://q.qlogo.cn/g?b=qq&nk=2244347713&s=160" alt="用户头像" loading="lazy" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-black dark:text-white text-sm">MingTone</h4>
-                            <p class="text-xs text-black/60 dark:text-white/60">2025-07-21</p>
-                        </div>
-                        <div class="text-xs text-[var(--primary)] font-medium">50 ￥</div>
-                    </div>
-                </div>
-                <div class="sponsor-card">
-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-[var(--card-bg)] border border-black/10 dark:border-white/10">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
-                        	<img src="https://coldin.top/src/avatar.webp" alt="用户头像" loading="lazy" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-black dark:text-white text-sm">酷丁同学</h4>
-                            <p class="text-xs text-black/60 dark:text-white/60">2025-07-15</p>
-                        </div>
-                        <div class="text-xs text-[var(--primary)] font-medium">5 USDC</div>
-                    </div>
-                </div>
-                <div class="sponsor-card">
-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-[var(--card-bg)] border border-black/10 dark:border-white/10">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
-                        	<Icon name="material-symbols:person" class="text-gray-500 dark:text-gray-400 text-[1.2rem]">
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-black dark:text-white text-sm">匿名用户</h4>
-                            <p class="text-xs text-black/60 dark:text-white/60">2025-07-15</p>
-                        </div>
-                        <div class="text-xs text-[var(--primary)] font-medium">19.80￥</div>
-                    </div>
-                </div>
-                <div class="sponsor-card">
-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-[var(--card-bg)] border border-black/10 dark:border-white/10">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
-                        	<img src="https://blog-backend.alexma.top/api/v2/objects/avatar/112zjnt1f3c2cf3prp.webp" alt="用户头像" loading="lazy" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-black dark:text-white text-sm">AlexMa233</h4>
-                            <p class="text-xs text-black/60 dark:text-white/60">2025-07-27</p>
-                        </div>
-                        <div class="text-xs text-[var(--primary)] font-medium">5 B币</div>
-                    </div>
-                </div>
-                <div class="sponsor-card">
-                    <div class="flex items-center gap-3 p-4 rounded-lg bg-[var(--card-bg)] border border-black/10 dark:border-white/10">
-                        <div class="w-10 h-10 rounded-full bg-gray-300 dark:bg-gray-600 flex items-center justify-center overflow-hidden">
-                            <img src="https://img.alicdn.com/bao/uploaded/i4/O1CN01TWOpM42DSyY5nC0hM_!!0-mtopupload.jpg" alt="用户头像" loading="lazy" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex-1">
-                            <h4 class="font-semibold text-black dark:text-white text-sm">HEISEN黑森</h4>
-                            <p class="text-xs text-black/60 dark:text-white/60">2025-08-09</p>
-                        </div>
-                        <div class="text-xs text-[var(--primary)] font-medium">两个月充电</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -212,21 +111,7 @@ import { Icon } from "astro-icon/components";
     @apply text-center;
 }
 
-.sponsors-section {
-    @apply mt-6;
-}
-
-.sponsors-grid {
-    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4;
-}
-
-.sponsor-placeholder {
-    @apply transition-all duration-200 hover:scale-105;
-}
-
-.sponsor-card {
-    @apply transition-all duration-200 hover:shadow-md hover:scale-105;
-}
+/* sponsors section removed */
 .crypto-info {
     @apply space-y-3;
 }

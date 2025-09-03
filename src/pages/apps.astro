@@ -1,0 +1,27 @@
+---
+import MainGridLayout from "@layouts/MainGridLayout.astro";
+import { siteConfig } from "@/config";
+import ImageWrapper from "@components/misc/ImageWrapper.astro";
+
+const apps = siteConfig.apps || [];
+---
+
+<MainGridLayout title="应用" description="应用">
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+    {apps.map((app) => (
+      <a href={app.url}
+         target={app.external ? "_blank" : undefined}
+         rel={app.external ? "noopener noreferrer" : undefined}
+         class="card-base rounded-[var(--radius-large)] overflow-hidden group block">
+        <div class="relative aspect-[4/3] bg-black/10">
+            <ImageWrapper src={app.image} alt={app.name} class="w-full h-full" fit="contain" dim={false} position="center 40%" />
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition"></div>
+        </div>
+        <div class="p-4">
+          <div class="text-lg font-bold mb-1 text-[var(--primary)] transition">{app.name}</div>
+          {app.description && <div class="text-sm text-black/60 dark:text-white/60">{app.description}</div>}
+        </div>
+      </a>
+    ))}
+  </div>
+</MainGridLayout>

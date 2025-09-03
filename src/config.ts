@@ -1,5 +1,5 @@
 import type {
-    ExpressiveCodeConfig,
+	ExpressiveCodeConfig,
 	ImageFallbackConfig,
 	LicenseConfig,
 	NavBarConfig,
@@ -53,7 +53,37 @@ export const siteConfig: SiteConfig = {
 			//   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
 		},
 	],
-	subtitle: ""
+	subtitle: "",
+	apps: [
+		{
+			name: "AI网站",
+			url: "https://ai0728.com.cn/",
+			image: "/favicon/openwebui.png",
+			description: "智能对话与创作助手",
+			external: true,
+		},
+		{
+			name: "私人云盘",
+			url: "https://cloudrunmax.top/",
+			image: "/favicon/cloudreve.png",
+			description: "内容管理入口",
+			external: true,
+		},
+		{
+			name: "私人图床",
+			url: "https://image.ai0728.com.cn/",
+			image: "/favicon/imagebed.png",
+			description: "利用CloudflareR2搭建的私人图床",
+			external: true,
+		},
+		{
+			name: "私人AI绘图",
+			url: "https://aiimage.cloudrunmax.top/",
+			image: "/favicon/aiimage.png",
+			description: "利用CloudflareWorker搭建的私人AI绘图",
+			external: true,
+		}
+	]
 };
 
 export const navBarConfig: NavBarConfig = {
@@ -61,6 +91,7 @@ export const navBarConfig: NavBarConfig = {
 		LinkPreset.Home,
 		LinkPreset.Archive,
 		LinkPreset.About,
+		{ name: "应用", url: "/apps/", external: false },
 		{
 			name: "赞助",
 			url: "/donate/", // Internal links should not include the base path, as it is automatically added
