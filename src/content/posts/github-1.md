@@ -3,7 +3,8 @@ title: 如何获得Github教育优惠
 published: 2025-08-12T08:35:00.000Z
 updated: 2025-08-19T23:19:03.000Z
 description: 免费获得Github两年教育福利
-tags: []
+image: '/uploads/images/image-1755016403916-475070115.png'
+tags: [Github教育优惠, Github]
 lang: ""
 ---
 

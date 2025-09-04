@@ -2,7 +2,8 @@
 title: 使用魔法访问Github等（仅限学习）
 published: 2025-08-03T02:23:47.000Z
 description: 开始你的学习之路
-tags: []
+image: '/uploads/images/github.png'
+tags: [学习, Github, 代理]
 lang: ""
 ---
 

@@ -3,7 +3,8 @@ title: "Gemini-balance部署指南(非docker)"
 published: 2025-08-10T06:55:17.000Z
 updated: 2025-08-10T07:41:23.000Z
 description: git源仓库形式启动项目
-tags: []
+image: '/uploads/images/geminibalance.jpg'
+tags: [服务器, 中转, Gemini, 部署教程]
 lang: ""
 ---
 
