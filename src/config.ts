@@ -138,9 +138,7 @@ export const imageFallbackConfig: ImageFallbackConfig = {
 
 export const umamiConfig: UmamiConfig = {
 	enable: true,
-	// 使用 Umami Cloud 区域根域名作为 API 基址
 	baseUrl: "https://us.umami.is",
-	// 从分享链接 https://us.umami.is/share/Ly5RD4PNG2SJRx2i/www.micostar.tech 中提取的 shareId
 	shareId: "Ly5RD4PNG2SJRx2i",
 	timezone: "Asia/Shanghai",
 };
