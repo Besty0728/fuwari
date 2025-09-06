@@ -145,7 +145,7 @@ export const umamiConfig: UmamiConfig = {
 
 export const googleAnalyticsConfig = {
 	enable: true,
-	measurementId: "G-C7LN161H2G", // 请替换为您自己的 Google Analytics 测量 ID
+	measurementId: "G-C7LN161H2G",
 };
 
 export const expressiveCodeConfig: ExpressiveCodeConfig = {
