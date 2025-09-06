@@ -261,17 +261,13 @@ var _hmt = _hmt || [];
      crossorigin="anonymous"></script>
 
 		<!-- 谷歌分析 -->
-		{googleAnalyticsConfig.enable && (
-			<>
-				<script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsConfig.measurementId}`}></script>
-				<script define:vars={{ measurementId: googleAnalyticsConfig.measurementId }}>
-					window.dataLayer = window.dataLayer || [];
-					function gtag(){dataLayer.push(arguments);}
-					gtag('js', new Date());
-					gtag('config', measurementId);
-				</script>
-			</>
-		)}
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-C7LN161H2G"></script>
+		<script is:inline>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-C7LN161H2G');
+		</script>
 
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}
