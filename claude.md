@@ -390,3 +390,22 @@ pnpm lint         # 代码检查
 - 音频文件建议控制在 10MB 以内，避免影响页面加载
 - 开发时注意类型安全，充分利用 TypeScript
 - 部署前检查 `astro.config.mjs` 中的 `site` 配置
+
+## SEO 配置重要说明
+
+### 域名重定向配置
+- **当前配置**: `astro.config.mjs` 中 `site: "https://www.micostar.tech"`
+- **重定向技术**: `micostar.tech` 自动重定向到 `www.micostar.tech`
+- **重要性**: 确保站点地图、RSS 等生成的链接使用最终重定向后的域名
+
+### 搜索引擎验证
+- **Google Search Console**: 需要使用 `www.micostar.tech` 配置
+- **Bing 站长工具**: 已添加验证标签 `D45C7B22F1891C5B0E4D62E9333D4D05`
+- **站点地图**: 位于 `/sitemap-index.xml` 和 `/sitemap-0.xml`
+- **RSS 订阅**: 位于 `/rss.xml`
+
+### 配置检查清单
+1. ✅ `astro.config.mjs` 站点 URL 使用重定向后域名
+2. ✅ `src/config.ts` 配置文件移除重复字段
+3. ✅ Layout.astro 添加 Bing 验证标签
+4. ✅ RSS 生成配置正常（需要 subtitle 字段）

@@ -11,6 +11,7 @@ import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
 	title: "Betsy Blog",
+	subtitle: "分享网络技术、服务器部署、Unity开发、AI技术应用与原理",
 	description: "分享网络技术、服务器部署、Unity开发、AI技术应用与原理、作者为流转星(Betsy)",
 
 	keywords: [],
@@ -53,7 +54,6 @@ export const siteConfig: SiteConfig = {
 			//   sizes: '32x32',              // (Optional) Size of the favicon, set only if you have favicons of different sizes
 		},
 	],
-	subtitle: "",
 	apps: [
 		{
 			name: "AI网站",
