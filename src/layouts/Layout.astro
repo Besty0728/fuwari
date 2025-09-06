@@ -3,7 +3,7 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import { profileConfig, siteConfig } from "@/config";
+import { profileConfig, siteConfig, googleAnalyticsConfig } from "@/config";
 import ConfigCarrier from "@components/ConfigCarrier.astro";
 import {
 	AUTO_MODE,
@@ -261,14 +261,17 @@ var _hmt = _hmt || [];
      crossorigin="anonymous"></script>
 
 		<!-- 谷歌分析 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9Z4LT4H8KH"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-9Z4LT4H8KH');
-</script>
+		{googleAnalyticsConfig.enable && (
+			<>
+				<script async src={`https://www.googletagmanager.com/gtag/js?id=${googleAnalyticsConfig.measurementId}`}></script>
+				<script define:vars={{ measurementId: googleAnalyticsConfig.measurementId }}>
+					window.dataLayer = window.dataLayer || [];
+					function gtag(){dataLayer.push(arguments);}
+					gtag('js', new Date());
+					gtag('config', measurementId);
+				</script>
+			</>
+		)}
 
 	</head>
 	<body class=" min-h-screen transition " class:list={[{"lg:is-home": isHomePage, "enable-banner": enableBanner}]}

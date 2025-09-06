@@ -143,6 +143,11 @@ export const umamiConfig: UmamiConfig = {
 	timezone: "Asia/Shanghai",
 };
 
+export const googleAnalyticsConfig = {
+	enable: true,
+	measurementId: "G-C7LN161H2G", // 请替换为您自己的 Google Analytics 测量 ID
+};
+
 export const expressiveCodeConfig: ExpressiveCodeConfig = {
 	theme: "github-dark",
 };

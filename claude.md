@@ -404,8 +404,3 @@ pnpm lint         # 代码检查
 - **站点地图**: 位于 `/sitemap-index.xml` 和 `/sitemap-0.xml`
 - **RSS 订阅**: 位于 `/rss.xml`
 
-### 配置检查清单
-1. ✅ `astro.config.mjs` 站点 URL 使用重定向后域名
-2. ✅ `src/config.ts` 配置文件移除重复字段
-3. ✅ Layout.astro 添加 Bing 验证标签
-4. ✅ RSS 生成配置正常（需要 subtitle 字段）
