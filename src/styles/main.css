@@ -4,6 +4,15 @@
     .card-base {
         @apply rounded-[var(--radius-large)] overflow-hidden bg-[var(--card-bg)] transition;
     }
+    
+    /* 音乐播放器全局样式 */
+    .music-player-container {
+        /* 确保播放器在导航栏中垂直居中 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
     h1, h2, h3, h4, h5, h6, p, a, span, li, ul, ol, blockquote, code, pre, table, th, td, strong {
         @apply transition;
     }
@@ -71,11 +80,22 @@
     }
 
     .hide-scrollbar {
-        scrollbar-width: none;
+        /* Internet Explorer 10+ */
         -ms-overflow-style: none;
     }
+    
     .hide-scrollbar::-webkit-scrollbar {
+        /* WebKit browsers (Chrome, Safari, newer versions of Edge) */
         display: none;
+        width: 0 !important;
+        height: 0 !important;
+    }
+    
+    /* Firefox - 使用 @supports 来安全地应用 */
+    @supports (scrollbar-width: none) {
+        .hide-scrollbar {
+            scrollbar-width: none;
+        }
     }
 
     .text-90 {

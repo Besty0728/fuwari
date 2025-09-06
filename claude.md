@@ -192,7 +192,36 @@ export const imageFallbackConfig = {
 - 支持标题、描述、标签搜索
 - 实时搜索结果展示
 
-### 4. 页面过渡动画
+### 4. 音乐播放器 🎵
+```typescript
+// 集成在导航栏的音乐播放器组件 (MusicPlayer.svelte)
+// 位置：统计按钮和搜索框之间
+// 尺寸：40px × 40px (桌面) / 36px × 36px (移动端)
+
+// 音频文件配置
+const audioSources = [
+  '/music/background.flac',  // 首选：FLAC 高质量无损格式
+  '/music/background.mp3'    // 备选：MP3 标准压缩格式
+];
+
+// 核心特性：
+// - 支持 FLAC/MP3 双格式自动回退
+// - 纯静态实现，基于 HTML5 Audio API
+// - 保持原始设计的动画效果 (borderAnimate + reveal)
+// - 适配网站主题色彩 (var(--primary))
+// - 错误处理和优雅降级
+```
+
+**播放器设计特点**：
+- **交互方式**: 基于 `input[type="checkbox"]` 的原生CSS交互
+- **动画效果**: 
+  - `borderAnimate`: 播放时圆环旋转动画 (700ms)
+  - `reveal`: 暂停图标显示动画 (300ms延迟)
+  - `clip-path`: 播放图标形状变化
+- **响应式**: 自动适配桌面和移动端尺寸
+- **文件存储**: `/public/music/` 目录，支持多格式回退
+
+### 5. 页面过渡动画
 ```typescript
 // 使用 Swup 实现页面切换动画
 swup({
@@ -252,7 +281,9 @@ pnpm lint         # 代码检查
 | `src/content/posts/` | 博客文章存储 | ⭐⭐⭐⭐⭐ |
 | `src/layouts/Layout.astro` | 页面主布局 | ⭐⭐⭐⭐ |
 | `src/components/PostCard.astro` | 文章卡片组件 | ⭐⭐⭐⭐ |
+| `src/components/MusicPlayer.svelte` | 音乐播放器组件 | ⭐⭐⭐ |
 | `src/pages/[...page].astro` | 首页分页逻辑 | ⭐⭐⭐⭐ |
+| `public/music/` | 音频文件存储目录 | ⭐⭐⭐ |
 | `astro.config.mjs` | Astro 框架配置 | ⭐⭐⭐ |
 | `src/plugins/` | 自定义插件目录 | ⭐⭐⭐ |
 
@@ -278,6 +309,33 @@ pnpm lint         # 代码检查
 2. 在 Sharp 配置中调整图片优化参数
 3. 配置 CDN 或图床服务
 
+### 添加/配置音乐播放器
+1. **添加音频文件**:
+   ```
+   public/music/
+   ├── background.flac  (推荐，高质量)
+   └── background.mp3   (备选，兼容性好)
+   ```
+
+2. **自定义音频源**:
+   ```typescript
+   // 在 MusicPlayer.svelte 中修改
+   const audioSources = [
+     '/music/your-song.flac',
+     '/music/your-song.mp3'
+   ];
+   ```
+
+3. **调整播放器样式**:
+   - 修改 `.container` 的 `width` 和 `height` 调整大小
+   - 通过 CSS 变量 `var(--primary)` 自动适配主题色
+   - 响应式断点在 `@media (max-width: 768px)`
+
+4. **播放器集成位置**: 
+   - 文件：`src/components/Navbar.astro`
+   - 位置：统计按钮和搜索框之间
+   - 通过 `gap-2` 控制与其他元素的间距
+
 ## 📚 扩展建议
 
 该项目具有良好的扩展性，可以考虑添加：
@@ -288,11 +346,47 @@ pnpm lint         # 代码检查
 - 图片画廊/灯箱效果
 - 文章系列/专题功能
 - 社交分享组件
+- **音乐播放器增强**: 播放列表、音量控制、进度条等
+
+## 🎵 音乐播放器技术细节
+
+### 实现原理
+```typescript
+// 基于 HTML5 Audio API 的纯静态实现
+// 支持现代浏览器的 FLAC 和 MP3 格式
+// 通过 Svelte 组件集成到 Astro 导航栏
+
+// 核心交互逻辑 (保持原始设计)
+<input class="play-btn" type="checkbox">  // CSS 状态控制
+<div class="play-icon"></div>             // 播放图标
+<div class="pause-icon"></div>            // 暂停图标
+
+// CSS 选择器链
+.play-btn:checked + .play-icon            // 播放时隐藏播放图标
+.play-btn:checked ~ .pause-icon::before   // 显示暂停图标左侧
+.play-btn:checked ~ .pause-icon::after    // 显示暂停图标右侧
+```
+
+### 动画时序
+```css
+播放按钮点击 → checkbox:checked → borderAnimate (700ms)
+                                ↓
+                              reveal 动画:
+                              - ::before (350ms 延迟)
+                              - ::after (600ms 延迟)
+```
+
+### 错误处理
+- 音频文件加载失败时自动回退到下一格式
+- 播放失败时重置按钮状态
+- 音频结束时自动重置到初始状态
+- 未加载完成时禁用交互
 
 ---
 
 **注意事项**：
 - 所有路径使用绝对路径引用 (`@/config`, `@components/...`)
 - 图片资源优先使用 `/public/` 目录或外链 CDN
+- 音频文件建议控制在 10MB 以内，避免影响页面加载
 - 开发时注意类型安全，充分利用 TypeScript
 - 部署前检查 `astro.config.mjs` 中的 `site` 配置

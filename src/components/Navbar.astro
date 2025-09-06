@@ -8,6 +8,7 @@ import { url } from "../utils/url-utils";
 import Search from "./Search.svelte";
 import DisplaySettings from "./widget/DisplaySettings.svelte";
 import NavMenuPanel from "./widget/NavMenuPanel.astro";
+import MusicPlayer from "./MusicPlayer.svelte";
 const className = Astro.props.class;
 
 let links: NavBarLink[] = navBarConfig.links.map(
@@ -42,8 +43,9 @@ let links: NavBarLink[] = navBarConfig.links.map(
                 </a>;
             })}
         </div>
-        <div class="flex">
+        <div class="flex items-center gap-2">
             <!--<SearchPanel client:load>-->
+            <MusicPlayer client:only="svelte"></MusicPlayer>
             <Search client:only="svelte"></Search>
             {!siteConfig.themeColor.fixed && (
                     <button aria-label="Display Settings" class="btn-plain scale-animation rounded-lg h-11 w-11 active:scale-90" id="display-settings-switch">
