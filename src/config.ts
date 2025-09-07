@@ -102,6 +102,11 @@ export const navBarConfig: NavBarConfig = {
 			url: "https://us.umami.is/share/Ly5RD4PNG2SJRx2i/www.micostar.tech", // External Umami share dashboard
 			external: true, // Show an external link icon and will open in a new tab
 		},
+		{
+			name: "状态",
+			url: "https://stats.uptimerobot.com/nqCDcNPcUp", // UptimeRobot status page
+			external: true, // Show an external link icon and will open in a new tab
+		},
 	],
 };
 
