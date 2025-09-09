@@ -38,5 +38,12 @@
       "source": "/sitemap.xml",
       "destination": "/sitemap-index.xml"
     }
+  ],
+  "redirects": [
+    { "source": "/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/", "destination": "/", "permanent": true },
+    { "source": "/posts/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2", "destination": "/", "permanent": true },
+    { "source": "/posts/%E3%80%90%E5%A4%87%E9%80%89%E7%94%A8%E4%B8%8D%E4%B8%BA%E5%AE%9E%E9%99%85%E5%87%BA%E7%8E%B0%E3%80%91", "destination": "/", "permanent": true },
+    { "source": "/posts/vercel%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97/", "destination": "/", "permanent": true },
+    { "source": "/posts/vercel%E9%83%A8%E7%BD%B2%E6%8C%87%E5%8D%97", "destination": "/", "permanent": true }
   ]
 }
