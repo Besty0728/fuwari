@@ -1,19 +1,43 @@
-# Fuwari 项目架构文档
+# CLAUDE.md
 
-> 📅 最后更新：2025年9月10日
-> 
-> 本文档用于帮助 AI 智能体快速理解 fuwari 项目的架构、功能和实现细节（本版已与当前代码核对并修正）。
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## 🎯 项目概述
+> 📅 最后更新：2025年9月19日
+>
+> 本文档用于帮助 Claude Code 快速理解 fuwari 项目的架构、功能和实现细节。
 
-**Fuwari** 是一个基于 Astro 框架构建的现代静态博客，具有以下核心特征（已与 package.json/astro.config.mjs 校验）：
+## 🔧 架构与技术栈
 
-- 框架与语言: Astro 5.7.9 + TypeScript
-- 样式: Tailwind CSS（@tailwindcss/typography）+ CSS 变量
-- 组件系统: Astro + Svelte（@astrojs/svelte）
-- 渲染与性能: 纯静态构建，内容按需加载，SEO 友好
-- 动画与交互: Swup 页面过渡、Svelte 搜索、音乐播放器
-- 部署: 适合 Vercel/Netlify/GitHub Pages 等静态托管
+### 核心技术
+- **框架**: Astro 5.7.9 + TypeScript
+- **样式**: Tailwind CSS + CSS 变量
+- **组件**: Astro + Svelte (客户端交互)
+- **构建**: 静态生成 (SSG)
+- **包管理**: pnpm 9.14.4
+- **代码质量**: Biome (格式化 + 检查)
+
+### 关键集成
+- **页面过渡**: @swup/astro (页面切换动画)
+- **代码高亮**: astro-expressive-code (自定义主题)
+- **搜索引擎**: @astrojs/sitemap + @astrojs/rss
+- **数学公式**: rehype-katex + remark-math
+- **图标**: astro-icon (@iconify 图标集合)
+
+### 自定义插件架构
+```
+src/plugins/
+├── rehype-*                  # HTML 后处理插件
+│   ├── image-fallback.mjs    # 图片回退机制
+│   ├── image-attrs.mjs       # 图片属性处理
+│   └── component-*.mjs       # 自定义组件 (admonition, github-card)
+├── remark-*                  # Markdown 预处理插件
+│   ├── reading-time.mjs      # 阅读时间计算
+│   ├── excerpt.js            # 文章摘要提取
+│   └── directive-rehype.js   # 指令解析
+└── expressive-code/          # 代码块扩展
+    ├── custom-copy-button.ts # 自定义复制按钮
+    └── language-badge.ts     # 语言标识
+```
 
 ## 🏗️ 项目结构
 
@@ -64,78 +88,62 @@ fuwari/
 └── package.json                    # 依赖与脚本
 ```
 
-## ⚙️ 核心配置系统
+## 🔧 核心配置说明
 
-### 1. 主配置文件（`src/config.ts`）
+所有配置统一管理在 `src/config.ts`，包含：
 
-包含以下配置模块（部分关键项已对齐当前实现）：
+### 站点配置 (siteConfig)
+- **基础信息**: title, subtitle, description, lang
+- **主题设置**: themeColor (hue: 361, 强制深色模式)
+- **背景系统**: 支持 CDN 图片背景 + 透明度控制
+- **横幅配置**: 可选的页面横幅系统
+- **目录设置**: TOC 显示深度控制
+- **应用集合**: 外部应用链接展示
 
-```ts
-// 站点基础配置（节选）
-export const siteConfig: SiteConfig = {
-  title: "Betsy Blog",
-  subtitle: "分享网络技术、服务器部署、Unity开发、AI技术应用与原理",
-  description: "分享网络技术、服务器部署、Unity开发、AI技术应用与原理、作者为流转星(Betsy)",
-  lang: "zh_CN",
-  themeColor: { hue: 361, fixed: true, forceDarkMode: true },
-  banner: { enable: false, src: "/xinghui.avif" },
-  background: { enable: true, src: "https://image.ai0728.com.cn/random?type=img&dir=package", opacity: 0.5 },
-  toc: { enable: true, depth: 2 },
-  favicon: [ { src: "https://image.ai0728.com.cn/file/CF/1756734381495_58fc963052f0a5cd8ce123b8d10c4a53.jpg" } ],
-  apps: [ /* AI网站、私人云盘、私人图床、私人AI绘图等 */ ]
-};
+### 导航配置 (navBarConfig)
+- **内置预设**: Home, Archive, About (LinkPreset)
+- **自定义链接**: 支持内部/外部链接
+- **外部服务**: Umami 统计、UptimeRobot 状态页
 
-// 导航配置（含外链：统计、状态）
-export const navBarConfig: NavBarConfig = {
-  links: [
-    LinkPreset.Home,
-    LinkPreset.Archive,
-    LinkPreset.About,
-    { name: "应用", url: "/apps/", external: false },
-    { name: "赞助", url: "/donate/", external: false },
-    { name: "统计", url: "https://us.umami.is/share/Ly5RD4PNG2SJRx2i/www.micostar.tech", external: true },
-    { name: "状态", url: "https://stats.uptimerobot.com/nqCDcNPcUp", external: true },
-  ]
-};
+### 个人资料 (profileConfig)
+- **头像设置**: 支持 CDN 或本地路径
+- **社交链接**: 自动图标 + URL (支持 Iconify)
 
-// 个人资料配置
-export const profileConfig: ProfileConfig = {
-  avatar: "https://image.ai0728.com.cn/file/CF/1756734381495_58fc963052f0a5cd8ce123b8d10c4a53.jpg",
-  name: "流转星(Betsy)",
-  bio: "爱我所爱，我们是彼此永远的动力",
-  links: [
-    { name: "Bilibili", icon: "fa6-brands:bilibili", url: "https://space.bilibili.com/420378171" },
-    { name: "GitHub", icon: "fa6-brands:github", url: "https://github.com/Besty0728" },
-  ]
-};
+## 🎯 开发工作流与架构重点
 
-// 图片回退、统计与代码主题
-export const imageFallbackConfig = { enable: true, originalDomain: "image.ai0728.com.cn", fallbackDomain: "image.cloudrunmax.top" };
-export const umamiConfig = { enable: true, baseUrl: "https://us.umami.is", shareId: "Ly5RD4PNG2SJRx2i", timezone: "Asia/Shanghai" };
-export const googleAnalyticsConfig = { enable: true, measurementId: "G-C7LN161H2G" };
-export const expressiveCodeConfig = { theme: "github-dark" };
+### 关键架构模式
+1. **配置驱动**: 所有定制化通过 `src/config.ts` 统一管理
+2. **插件化扩展**: Markdown 处理通过 remark/rehype 插件链
+3. **类型安全**: 严格 TypeScript + Zod schema 验证
+4. **静态优先**: 纯静态生成，客户端交互仅限搜索和音乐播放器
+
+### 内容集合 Schema (`src/content/config.ts`)
+```typescript
+// posts: 主要博客文章集合
+// spec: 规范文档集合 (可选元信息)
+// assets: 数据集合 (type: 'data')
 ```
 
-### 2. 内容集合配置（`src/content/config.ts`）
-
-定义了三类集合：
-
-```ts
-// posts：文章（带置顶、语言、前后文链接等）
-title: z.string()
-published: z.date()
-updated: z.date().optional()
-draft: z.boolean().optional().default(false)
-description: z.string().optional().default("")
-image: z.string().optional().default("")
-tags: z.array(z.string()).optional().default([])
-lang: z.string().optional().default("")
-pinned: z.boolean().optional().default(false)
-prevTitle/prevSlug/nextTitle/nextSlug: string().default("")
-
-// spec：规范类文档（可选元信息）
-// assets：数据集合（data 类型）
+### Markdown 处理流水线
 ```
+Markdown 源文件
+├── remark 插件 (AST 预处理)
+│   ├── remarkReadingTime → 阅读时间计算
+│   ├── remarkExcerpt → 摘要提取
+│   ├── remarkDirective → 指令解析 (:::note 等)
+│   └── remarkMath → 数学公式预处理
+└── rehype 插件 (HTML 后处理)
+    ├── rehypeKatex → 数学公式渲染
+    ├── rehypeImageFallback → 图片回退
+    ├── rehypeComponents → 自定义组件
+    └── rehypeExternalLinks → 外链处理
+```
+
+### 组件架构说明
+- **布局组件**: `src/layouts/Layout.astro` (全局布局)
+- **页面组件**: `src/pages/*.astro` (路由页面)
+- **UI 组件**: `src/components/*.astro` (可复用组件)
+- **交互组件**: `src/components/*.svelte` (客户端状态管理)
 
 ## 🎨 主题系统
 
@@ -169,22 +177,34 @@ banner: {
 
 ## 📝 内容管理系统
 
-### 1. 文章前置元数据格式
+### 1. 新建文章流程
+```bash
+# 自动创建带前置元数据的文章
+pnpm new-post "my-new-article"  # 创建 src/content/posts/my-new-article.md
+```
+
+### 2. 文章前置元数据格式
 ```yaml
 ---
-title: 文章标题
-published: 2025-08-12T08:35:00.000Z
-updated: 2025-08-19T23:19:03.000Z
-description: 文章描述
-image: '/uploads/images/cover.png'
-tags: [标签1, 标签2]
-lang: ""  # 可选，覆盖站点默认语言
-pinned: false  # 是否置顶
-draft: false   # 是否为草稿
+title: 文章标题                    # 必填
+published: 2025-08-12T08:35:00.000Z  # 必填，发布时间
+updated: 2025-08-19T23:19:03.000Z    # 可选，更新时间
+description: 文章描述              # 可选，SEO 描述
+image: '/uploads/images/cover.png'   # 可选，封面图片
+tags: [标签1, 标签2]               # 可选，标签数组
+lang: ""                          # 可选，覆盖站点默认语言
+pinned: false                     # 可选，是否置顶
+draft: false                      # 可选，是否为草稿
+
+# 以下字段由系统自动填充，用于前后文链接
+prevTitle: ""
+prevSlug: ""
+nextTitle: ""
+nextSlug: ""
 ---
 ```
 
-### 2. 文章排序逻辑 (`src/utils/content-utils.ts`)
+### 3. 文章排序逻辑 (`src/utils/content-utils.ts`)
 ```typescript
 // 排序优先级：
 // 1. 置顶文章优先
@@ -295,15 +315,32 @@ export const umamiConfig: UmamiConfig = {
 
 ## 🚀 开发与部署
 
-### 开发命令
+### 常用开发命令
 ```bash
-pnpm dev          # 开发服务器（等价于 pnpm start）
-pnpm build        # 构建生产版本
-pnpm preview      # 预览构建结果
-pnpm new-post     # 创建新文章（scripts/new-post.js）
-pnpm type-check   # TS 类型检查
-pnpm format       # 代码格式化（Biome）
-pnpm lint         # 代码检查（Biome）
+# 开发与构建
+pnpm dev                      # 启动开发服务器 (localhost:4321)
+pnpm start                    # 开发服务器别名
+pnpm build                    # 构建生产版本到 ./dist/
+pnpm preview                  # 预览构建结果
+
+# 内容管理
+pnpm new-post <filename>      # 创建新文章 (使用 scripts/new-post.js)
+
+# 代码质量
+pnpm type-check               # TypeScript 类型检查 (--noEmit --isolatedDeclarations)
+pnpm format                   # 代码格式化 (Biome)
+pnpm lint                     # 代码检查 (Biome)
+
+# Astro 工具
+pnpm astro ...                # 运行 Astro CLI 命令
+pnpm astro --help             # Astro CLI 帮助
+```
+
+### 数据迁移
+```bash
+# SQLite 博客迁移 (实验性功能)
+pnpm node scripts/migrate-from-sqlite.mjs --db "path/to/database.db" --dry-run  # 预览
+pnpm node scripts/migrate-from-sqlite.mjs --db "path/to/database.db" --out ./src/content/posts  # 迁移
 ```
 
 ### 部署配置
@@ -443,10 +480,34 @@ pnpm lint         # 代码检查（Biome）
 
 ---
 
+## ⚠️ Claude Code 注意事项
+
+### 部署前必检查
+1. **站点配置**: `astro.config.mjs` 中的 `site` URL 必须与部署域名一致
+2. **图片回退**: 确保 `imageFallbackConfig` 中的图床域名可访问
+3. **外部链接**: 导航栏中的统计和状态页链接需有效
+4. **音频文件**: `public/music/` 目录下需有对应的音频文件
+
+### 类型安全与验证
+- 修改配置时必须遵循 `src/types/config.ts` 中的类型定义
+- 文章 frontmatter 受 `src/content/config.ts` schema 约束
+- 使用 `pnpm type-check` 验证 TypeScript 类型
+
+### 代码质量标准
+- 提交前运行 `pnpm lint` 和 `pnpm format`
+- 使用 Biome 统一代码风格 (配置在 `biome.json`)
+- 组件优先使用 Astro，仅交互部分使用 Svelte
+
+### 性能考虑
+- 图片优化: 使用 Sharp 自动压缩和格式转换
+- 音频文件: 建议 < 10MB，提供 FLAC + MP3 双格式
+- 静态资源: 优先使用稳定 CDN，启用图片回退机制
+
+---
+
 修订概要（相对上一版）：
-- 更正音乐播放器的实际放置位置与当前资源现状（仅存在 FLAC）。
-- 补充与修订插件链路：remark/rehype、External Links、Expressive Code 自定义复制按钮等。
-- 补充 `spec`/`assets` 集合与 `lang/description/image/tags` 默认值。
-- 校正 Swup 配置参数与 `astro.config.mjs` 站点设置。
-- 更新脚本命令与依赖版本，明确 Type Check/格式化/检查工具。
+- 增加 Claude Code 专用前缀格式
+- 重新组织开发命令和架构说明
+- 补充详细的 Markdown 处理流水线
+- 增加针对 Claude Code 的注意事项和最佳实践
 
