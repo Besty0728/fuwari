@@ -48,7 +48,10 @@ lang: ''                         # 语言(默认继承配置)
 # 使用您的双CDN图床
 ![图片描述](https://image.ai0728.com.cn/your-image.jpg)
 
-# 本地图片
+# 本地图片（放在 public/uploads/images/ 目录下）
+![本地图片](/uploads/images/example.png)
+
+# 相对路径本地图片
 ![本地图片](./images/local-image.jpg)
 ```
 
@@ -85,6 +88,29 @@ function hello() {
 | 列1 | 列2 | 列3 |
 |-----|-----|-----|
 | 数据1 | 数据2 | 数据3 |
+```
+
+#### 文本样式
+```markdown
+# 基本样式
+**加粗文本**
+*斜体文本*
+***加粗斜体***
+~~删除线~~
+
+# 下划线（使用HTML标签）
+<ins>带下划线的文本</ins>
+
+# 红色加粗警告文本（推荐方式）
+<span style="color: red; font-weight: bold;">重要警告信息</span>
+
+# 其他颜色文本
+<span style="color: blue;">蓝色文本</span>
+<span style="color: green;">绿色文本</span>
+<span style="color: orange;">橙色文本</span>
+
+# 组合样式
+<span style="color: red; font-weight: bold; text-decoration: underline;">红色加粗下划线</span>
 ```
 
 ## 🖼️ 图片管理
@@ -191,6 +217,64 @@ git push origin main
 ## 参考链接
 ```
 
+## 🎨 实用格式示例
+
+### 1. 图片使用最佳实践
+```markdown
+# 教程中的截图（放在 public/uploads/images/ 目录）
+![命令行界面](/uploads/images/ML.png)
+![用户管理界面](/uploads/images/UserM.png)
+![文件夹结构](/uploads/images/Users.png)
+
+# 带描述的图片
+![资源监视器界面 - 用于查看和管理系统进程](/uploads/images/ZYGL.png)
+```
+
+### 2. 重要提示和警告
+```markdown
+# 红色加粗警告（推荐方式）
+<span style="color: red; font-weight: bold;">需要重启则重启，后续仍选择超级管理员，误进入原来的用户导致错乱后果自负！！！</span>
+
+# 其他提示样式
+<span style="color: orange; font-weight: bold;">注意事项</span>
+<span style="color: blue; font-weight: bold;">提示信息</span>
+```
+
+### 3. 步骤编号格式
+```markdown
+1. 首先你需要...
+   ![相关截图](/uploads/images/step1.png)
+
+2. 然后按下Alt+F4...
+
+3. 在任务管理器（Ctrl+Shift+Esc）...
+   ![任务管理器界面](/uploads/images/UserM.png)
+```
+
+### 4. 代码和路径高亮
+```markdown
+# 命令代码块
+```bash
+net user administrator /active:yes
+```
+
+# 文件路径
+```plaintext
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList\S-1-5-21-xxx
+```
+
+# 重要参数名
+修改<ins>**ProfileImagePath**</ins>
+```
+
+### 5. 键盘快捷键格式
+```markdown
+# 标准快捷键格式
+按下Alt+F4
+使用Ctrl+Shift+Esc
+Win+R组合键
+```
+
 ## 🔧 高级功能
 
 ### 1. 草稿功能
@@ -204,11 +288,16 @@ lang: 'en'  # 设置文章语言
 ```
 
 ### 3. 自定义样式
-可以在文章中使用 HTML 标签：
+可以在文章中使用 HTML 标签和内联样式：
 ```html
 <div class="custom-style">
   自定义内容
 </div>
+
+<!-- 推荐的文本样式方法 -->
+<span style="color: red; font-weight: bold;">重要提示</span>
+<span style="background-color: yellow;">高亮文本</span>
+<ins>下划线文本</ins>
 ```
 
 ## 📊 SEO 优化
@@ -241,6 +330,15 @@ A: 确保语言标识符正确，检查代码块格式
 
 ### Q: 如何删除文章？
 A: 直接删除对应的 `.md` 文件并提交
+
+### Q: 红色加粗文本不显示怎么办？
+A: 使用 `<span style="color: red; font-weight: bold;">文本</span>` 而不是 `<font>` 标签
+
+### Q: 本地图片不显示？
+A: 确保图片放在 `public/uploads/images/` 目录下，使用 `/uploads/images/filename.png` 路径
+
+### Q: HTML样式不生效？
+A: 确保使用内联样式 `style="..."` 而不是CSS类名
 
 ## 🔗 有用的资源
 
