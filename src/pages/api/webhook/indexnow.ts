@@ -27,7 +27,18 @@ export const POST: APIRoute = async ({ request }) => {
       }
     });
 
-    const result = await indexNowResponse.json();
+    let result;
+    try {
+      const responseText = await indexNowResponse.text();
+      result = responseText ? JSON.parse(responseText) : { status: indexNowResponse.status };
+    } catch (jsonError) {
+      console.error('Failed to parse IndexNow API response:', jsonError);
+      result = { 
+        error: 'Invalid response format', 
+        status: indexNowResponse.status,
+        statusText: indexNowResponse.statusText
+      };
+    }
 
     return new Response(JSON.stringify({
       success: true,

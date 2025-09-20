@@ -54,19 +54,30 @@ export const POST: APIRoute = async ({ request }) => {
 
     const results = await Promise.allSettled(
       indexNowEndpoints.map(async (endpoint) => {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json; charset=utf-8'
-          },
-          body: JSON.stringify(indexNowRequest)
-        });
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(indexNowRequest)
+          });
 
-        return {
-          endpoint,
-          status: response.status,
-          success: response.ok
-        };
+          return {
+            endpoint,
+            status: response.status,
+            success: response.ok,
+            statusText: response.statusText || 'No message'
+          };
+        } catch (error) {
+          console.error(`IndexNow request failed for ${endpoint}:`, error);
+          return {
+            endpoint,
+            status: 0,
+            success: false,
+            error: error instanceof Error ? error.message : 'Network error'
+          };
+        }
       })
     );
 

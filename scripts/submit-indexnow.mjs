@@ -76,11 +76,12 @@ async function submitToIndexNow(urls) {
           body: JSON.stringify(indexNowRequest)
         });
 
+        // IndexNow API 通常返回空响应体，只需要检查状态码
         return {
           endpoint,
           status: response.status,
           success: response.ok,
-          statusText: response.statusText
+          statusText: response.statusText || 'No message'
         };
       } catch (error) {
         return {
