@@ -39,11 +39,18 @@ jobs:
       run: pnpm build
       
     - name: Submit to IndexNow
-      run: pnpm submit-indexnow
-      continue-on-error: true  # 即使提交失败也不算构建失败
+      run: |
+        echo "Starting IndexNow submission..."
+        if pnpm submit-indexnow; then
+          echo "✅ IndexNow submission successful"
+        else
+          echo "❌ IndexNow submission failed, but continuing..."
+          exit 0  # 不让工作流失败
+        fi
+      continue-on-error: true
       
     - name: Report status
       if: always()
       run: |
-        echo "IndexNow submission completed"
-        echo "Check logs above for submission results"
+        echo "IndexNow submission workflow completed"
+        echo "Check logs above for detailed submission results"
