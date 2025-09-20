@@ -1,0 +1,49 @@
+name: IndexNow Auto Submit
+
+on:
+  # 当有新的推送到 main 分支时触发（Vercel 会自动部署）
+  push:
+    branches: [ main ]
+  
+  # 手动触发
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: '提交原因'
+        required: false
+        default: 'Manual submission'
+
+jobs:
+  submit-indexnow:
+    name: Submit URLs to IndexNow
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: latest
+        
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+      
+    - name: Build site
+      run: pnpm build
+      
+    - name: Submit to IndexNow
+      run: pnpm submit-indexnow
+      continue-on-error: true  # 即使提交失败也不算构建失败
+      
+    - name: Report status
+      if: always()
+      run: |
+        echo "IndexNow submission completed"
+        echo "Check logs above for submission results"

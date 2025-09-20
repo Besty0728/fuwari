@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MainGridLayout from '../layouts/MainGridLayout.astro';
+import { Icon } from 'astro-icon/components';
+---
+
+<Layout title="管理面板">
+  <MainGridLayout>
+    <div class="flex w-full rounded-[var(--radius-large)] overflow-hidden relative min-h-32">
+      <div class="card-base z-10 px-9 py-6 relative w-full">
+        <div class="absolute inset-0 bg-gradient-to-br from-[var(--primary)] via-[var(--primary)] to-[var(--secondary)] opacity-10"></div>
+        
+        <div class="relative">
+          <div class="text-90 mb-2 font-bold text-black dark:text-white">
+            <Icon name="material-symbols:admin-panel-settings" class="inline w-8 h-8 mb-1 mr-2" />
+            IndexNow 搜索引擎收录管理
+          </div>
+          <div class="text-50 text-black/75 dark:text-white/75">
+            🔒 私有管理面板 - 自动提交网站 URL 到搜索引擎，加快收录速度
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-base">
+      <div class="p-6">
+        <h2 class="text-xl font-bold mb-4 flex items-center">
+          <Icon name="material-symbols:settings" class="w-5 h-5 mr-2" />
+          配置状态
+        </h2>
+        
+        <div class="space-y-3 mb-6">
+          <div class="flex items-center justify-between p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+            <div class="flex items-center">
+              <Icon name="material-symbols:check-circle" class="w-5 h-5 text-green-600 mr-2" />
+              <span class="text-green-800 dark:text-green-200">密钥文件</span>
+            </div>
+            <span class="text-sm text-green-600 dark:text-green-400">751fa2696f5b4f5890799ca542b34fbb.txt</span>
+          </div>
+          
+          <div class="flex items-center justify-between p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div class="flex items-center">
+              <Icon name="material-symbols:link" class="w-5 h-5 text-blue-600 mr-2" />
+              <span class="text-blue-800 dark:text-blue-200">站点地址</span>
+            </div>
+            <span class="text-sm text-blue-600 dark:text-blue-400">https://www.micostar.tech</span>
+          </div>
+        </div>
+
+        <h3 class="text-lg font-semibold mb-3 flex items-center">
+          <Icon name="material-symbols:rocket-launch" class="w-5 h-5 mr-2" />
+          手动提交
+        </h3>
+        
+        <div class="space-y-4">
+          <button id="submit-btn" class="w-full py-3 px-4 bg-[var(--primary)] hover:bg-[var(--primary)]/80 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center">
+            <Icon name="material-symbols:upload" class="w-5 h-5 mr-2" />
+            立即提交所有 URL
+          </button>
+          
+          <div id="status" class="hidden p-4 rounded-lg"></div>
+          <div id="results" class="hidden"></div>
+        </div>
+
+        <div class="mt-6 p-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+          <h4 class="font-medium mb-2 flex items-center">
+            <Icon name="material-symbols:info" class="w-4 h-4 mr-2" />
+            自动提交说明
+          </h4>
+          <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+            <li>• 使用 <code class="bg-gray-200 dark:bg-gray-700 px-1 rounded">pnpm build:indexnow</code> 构建并自动提交</li>
+            <li>• 新发布文章后会自动包含在下次提交中</li>
+            <li>• 支持 Bing、Yandex 等搜索引擎的 IndexNow 协议</li>
+            <li>• 建议在内容更新后运行以加速搜索引擎收录</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </MainGridLayout>
+</Layout>
+
+<script>
+  const submitBtn = document.getElementById('submit-btn');
+  const statusDiv = document.getElementById('status');
+  const resultsDiv = document.getElementById('results');
+
+  submitBtn?.addEventListener('click', async () => {
+    if (!submitBtn || !statusDiv || !resultsDiv) return;
+    
+    // 禁用按钮并显示加载状态
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<svg class="animate-spin w-5 h-5 mr-2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"></circle><path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>提交中...';
+    
+    statusDiv.className = 'block p-4 rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800';
+    statusDiv.innerHTML = '<div class="flex items-center text-blue-800 dark:text-blue-200"><svg class="animate-spin w-4 h-4 mr-2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" opacity="0.25"></circle><path fill="currentColor" opacity="0.75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>正在提交 URL 到搜索引擎...</div>';
+    
+    try {
+      const response = await fetch('/api/indexnow', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        statusDiv.className = 'block p-4 rounded-lg bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800';
+        statusDiv.innerHTML = `<div class="text-green-800 dark:text-green-200">✅ 提交成功！共提交 ${result.totalUrls} 个 URL，${result.successful}/${result.submittedTo} 个搜索引擎响应成功</div>`;
+        
+        // 显示详细结果
+        resultsDiv.className = 'block mt-4';
+        resultsDiv.innerHTML = `
+          <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4">
+            <h5 class="font-medium mb-2">提交详情：</h5>
+            <div class="text-sm space-y-1">
+              ${result.results.map((r: any) => {
+                if (r.success) {
+                  return `<div class="text-green-600">✅ ${new URL(r.endpoint).hostname}: HTTP ${r.status}</div>`;
+                } else {
+                  return `<div class="text-red-600">❌ ${new URL(r.endpoint).hostname}: HTTP ${r.status} - ${r.statusText || r.error || 'Unknown error'}</div>`;
+                }
+              }).join('')}
+            </div>
+            <details class="mt-3">
+              <summary class="cursor-pointer text-sm text-gray-600 dark:text-gray-400">查看提交的 URL (${result.totalUrls} 个)</summary>
+              <div class="mt-2 max-h-40 overflow-y-auto text-xs text-gray-500 dark:text-gray-400 space-y-1">
+                ${result.urls.map((url: string) => `<div>${url}</div>`).join('')}
+              </div>
+            </details>
+          </div>
+        `;
+      } else {
+        statusDiv.className = 'block p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800';
+        statusDiv.innerHTML = `<div class="text-red-800 dark:text-red-200">❌ 提交失败：${result.error}</div>`;
+        resultsDiv.className = 'hidden';
+      }
+    } catch (error) {
+      statusDiv.className = 'block p-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800';
+      statusDiv.innerHTML = `<div class="text-red-800 dark:text-red-200">❌ 网络错误：${error instanceof Error ? error.message : '未知错误'}</div>`;
+      resultsDiv.className = 'hidden';
+    } finally {
+      // 恢复按钮状态
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>立即提交所有 URL';
+    }
+  });
+</script>
