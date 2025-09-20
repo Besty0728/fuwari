@@ -7,7 +7,7 @@
 		"start": "astro dev",
 		"build": "astro build",
 		"build:indexnow": "astro build && node scripts/submit-indexnow.mjs",
-		"submit-indexnow": "node scripts/submit-indexnow-simple.mjs",
+		"submit-indexnow": "node scripts/submit-indexnow.mjs",
 		"preview": "astro preview",
 		"astro": "astro",
 		"type-check": "tsc --noEmit --isolatedDeclarations",

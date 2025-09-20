@@ -1,100 +1,67 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
-const INDEXNOW_KEY = '751fa2696f5b4f5890799ca542b34fbb';
-
-interface IndexNowRequest {
-  host: string;
-  key: string;
-  keyLocation: string;
-  urlList: string[];
-}
-
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const siteUrl = 'https://www.micostar.tech';
+    console.log('IndexNow API called');
     
-    // 获取所有已发布的博客文章
-    const posts = await getCollection('posts', ({ data }) => !data.draft);
+    // 获取所有博客文章
+    const posts = await getCollection('posts');
     
-    // 生成所有需要索引的 URL
-    const urlList: string[] = [
-      // 主要页面
-      siteUrl,
-      `${siteUrl}/about/`,
-      `${siteUrl}/apps/`,
-      `${siteUrl}/donate/`,
-      `${siteUrl}/archive/`,
-      
-      // 博客文章页面
-      ...posts.map(post => `${siteUrl}/posts/${post.slug}/`),
-      
-      // 分页页面
-      `${siteUrl}/page/1/`,
-      
-      // RSS 和 sitemap
-      `${siteUrl}/rss.xml`,
-      `${siteUrl}/sitemap-index.xml`,
+    // 构建要提交的 URL 列表
+    const baseUrl = 'https://micostar.tech';
+    const urls = [
+      baseUrl, // 首页
+      `${baseUrl}/archive`, // 归档页
+      `${baseUrl}/about`, // 关于页
+      ...posts.map(post => `${baseUrl}/posts/${post.slug}`) // 所有文章页面
     ];
 
-    // 构造 IndexNow 请求体
-    const indexNowRequest: IndexNowRequest = {
-      host: new URL(siteUrl).hostname,
-      key: INDEXNOW_KEY,
-      keyLocation: `${siteUrl}/${INDEXNOW_KEY}.txt`,
-      urlList: urlList
-    };
+    console.log(`Submitting ${urls.length} URLs to IndexNow`);
 
-    // 发送到多个搜索引擎的 IndexNow 端点
-    const indexNowEndpoints = [
-      'https://api.indexnow.org/indexnow',
-      'https://www.bing.com/indexnow',
-      'https://yandex.com/indexnow'
-    ];
+    // IndexNow 官方配置
+    const key = '751fa2696f5b4f5890799ca542b34fbb';
+    const host = 'micostar.tech';
+    const keyLocation = `${baseUrl}/${key}.txt`;
 
-    const results = await Promise.allSettled(
-      indexNowEndpoints.map(async (endpoint) => {
-        try {
-          const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify(indexNowRequest)
-          });
-
-          return {
-            endpoint,
-            status: response.status,
-            success: response.ok,
-            statusText: response.statusText || 'No message'
-          };
-        } catch (error) {
-          console.error(`IndexNow request failed for ${endpoint}:`, error);
-          return {
-            endpoint,
-            status: 0,
-            success: false,
-            error: error instanceof Error ? error.message : 'Network error'
-          };
-        }
+    // 按照官方格式提交到 api.indexnow.org
+    const response = await fetch('https://api.indexnow.org/IndexNow', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json; charset=utf-8',
+        'User-Agent': 'Micostar-Blog-IndexNow/1.0'
+      },
+      body: JSON.stringify({
+        host,
+        key,
+        keyLocation,
+        urlList: urls
       })
-    );
+    });
 
-    // 统计结果
-    const successful = results.filter(result => 
-      result.status === 'fulfilled' && result.value.success
-    ).length;
+    console.log(`IndexNow response: ${response.status} ${response.statusText}`);
+    
+    // IndexNow API 通常返回 HTTP 200 (成功) 或 202 (已接受)
+    const isSuccess = response.status === 200 || response.status === 202;
+    
+    let responseText = '';
+    try {
+      responseText = await response.text();
+      console.log('IndexNow response body:', responseText);
+    } catch (e) {
+      console.log('No response body or failed to read response');
+    }
 
     return new Response(JSON.stringify({
-      success: true,
-      totalUrls: urlList.length,
-      submittedTo: indexNowEndpoints.length,
-      successful: successful,
-      results: results.map(result => 
-        result.status === 'fulfilled' ? result.value : { error: result.reason }
-      ),
-      urls: urlList
+      success: isSuccess,
+      message: isSuccess ? 'URLs submitted to IndexNow successfully' : `IndexNow submission failed: HTTP ${response.status}`,
+      totalUrls: urls.length,
+      status: response.status,
+      statusText: response.statusText,
+      responseBody: responseText,
+      urls,
+      endpoint: 'https://api.indexnow.org/IndexNow',
+      submittedAt: new Date().toISOString()
     }), {
       status: 200,
       headers: {
@@ -103,11 +70,11 @@ export const POST: APIRoute = async ({ request }) => {
     });
 
   } catch (error) {
-    console.error('IndexNow submission error:', error);
-    
+    console.error('IndexNow API error:', error);
     return new Response(JSON.stringify({
       success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
+      error: error instanceof Error ? error.message : 'Unknown error',
+      endpoint: 'https://api.indexnow.org/IndexNow'
     }), {
       status: 500,
       headers: {
@@ -115,17 +82,4 @@ export const POST: APIRoute = async ({ request }) => {
       }
     });
   }
-};
-
-export const GET: APIRoute = async () => {
-  return new Response(JSON.stringify({
-    message: 'IndexNow API endpoint. Use POST to submit URLs.',
-    key: INDEXNOW_KEY,
-    keyLocation: `https://www.micostar.tech/${INDEXNOW_KEY}.txt`
-  }), {
-    status: 200,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
 };

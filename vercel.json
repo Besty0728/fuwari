@@ -5,11 +5,7 @@
   "installCommand": "npm install",
   "framework": "astro",
   "regions": ["hkg1"],
-  "functions": {
-    "src/pages/api/**/*.ts": {
-      "runtime": "nodejs18.x"
-    }
-  },
+
   "headers": [
     {
       "source": "/(.*)",
