@@ -1,23 +1,100 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import fs from 'fs';
+import path from 'path';
+
+// 已提交URL记录文件路径
+const SUBMITTED_URLS_FILE = path.join(process.cwd(), '.indexnow-submitted.json');
+
+// 读取已提交的URL记录
+function getSubmittedUrls() {
+  if (!fs.existsSync(SUBMITTED_URLS_FILE)) {
+    return {
+      urls: [],
+      lastSubmitted: null,
+      totalSubmissions: 0
+    };
+  }
+  
+  try {
+    const data = fs.readFileSync(SUBMITTED_URLS_FILE, 'utf-8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.warn('Warning: Cannot read submitted URLs record:', error);
+    return {
+      urls: [],
+      lastSubmitted: null,
+      totalSubmissions: 0
+    };
+  }
+}
+
+// 保存已提交的URL记录
+function saveSubmittedUrls(submittedData: any) {
+  try {
+    fs.writeFileSync(SUBMITTED_URLS_FILE, JSON.stringify(submittedData, null, 2), 'utf-8');
+  } catch (error) {
+    console.error('Failed to save submitted URLs record:', error);
+  }
+}
 
 export const POST: APIRoute = async ({ request }) => {
   try {
     console.log('IndexNow API called');
+    
+    // 检查是否请求强制提交
+    const body = await request.text();
+    const requestData = body ? JSON.parse(body) : {};
+    const forceSubmit = requestData.force === true;
     
     // 获取所有博客文章
     const posts = await getCollection('posts');
     
     // 构建要提交的 URL 列表
     const baseUrl = 'https://micostar.tech';
-    const urls = [
+    const currentUrls = [
       baseUrl, // 首页
       `${baseUrl}/archive`, // 归档页
       `${baseUrl}/about`, // 关于页
       ...posts.map(post => `${baseUrl}/posts/${post.slug}`) // 所有文章页面
     ];
 
-    console.log(`Submitting ${urls.length} URLs to IndexNow`);
+    console.log(`Current site has ${currentUrls.length} URLs`);
+
+    let urlsToSubmit = currentUrls;
+    let isIncremental = false;
+
+    if (!forceSubmit) {
+      // 增量提交模式
+      const submittedData = getSubmittedUrls();
+      const submittedUrls = new Set(submittedData.urls || []);
+      
+      // 找出新增的URL
+      const newUrls = currentUrls.filter(url => !submittedUrls.has(url));
+      
+      if (newUrls.length === 0) {
+        return new Response(JSON.stringify({
+          success: true,
+          message: 'No new URLs to submit',
+          totalUrls: currentUrls.length,
+          submittedUrls: submittedUrls.size,
+          newUrls: 0,
+          savedQuota: currentUrls.length,
+          isIncremental: true,
+          lastSubmitted: submittedData.lastSubmitted,
+          totalSubmissions: submittedData.totalSubmissions || 0
+        }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+      
+      urlsToSubmit = newUrls;
+      isIncremental = true;
+      console.log(`Incremental mode: Submitting ${newUrls.length} new URLs to IndexNow`);
+    } else {
+      console.log(`Force mode: Submitting all ${urlsToSubmit.length} URLs to IndexNow`);
+    }
 
     // IndexNow 官方配置
     const key = '751fa2696f5b4f5890799ca542b34fbb';
@@ -35,7 +112,7 @@ export const POST: APIRoute = async ({ request }) => {
         host,
         key,
         keyLocation,
-        urlList: urls
+        urlList: urlsToSubmit
       })
     });
 
@@ -52,14 +129,40 @@ export const POST: APIRoute = async ({ request }) => {
       console.log('No response body or failed to read response');
     }
 
+    if (isSuccess) {
+      // 更新已提交URL记录
+      const submittedData = getSubmittedUrls();
+      const submittedUrls = new Set(submittedData.urls || []);
+      
+      const updatedSubmittedData = {
+        urls: forceSubmit ? urlsToSubmit : [...submittedUrls, ...urlsToSubmit],
+        lastSubmitted: new Date().toISOString(),
+        totalSubmissions: (submittedData.totalSubmissions || 0) + 1,
+        lastSubmissionDetails: {
+          newUrlsCount: urlsToSubmit.length,
+          totalUrlsCount: currentUrls.length,
+          timestamp: new Date().toISOString(),
+          status: response.status,
+          isIncremental,
+          forceSubmit
+        }
+      };
+      
+      saveSubmittedUrls(updatedSubmittedData);
+    }
+
     return new Response(JSON.stringify({
       success: isSuccess,
-      message: isSuccess ? 'URLs submitted to IndexNow successfully' : `IndexNow submission failed: HTTP ${response.status}`,
-      totalUrls: urls.length,
+      message: isSuccess ? `URLs submitted to IndexNow successfully (${isIncremental ? 'incremental' : 'full'} mode)` : `IndexNow submission failed: HTTP ${response.status}`,
+      totalUrls: urlsToSubmit.length,
+      totalSiteUrls: currentUrls.length,
+      savedQuota: isIncremental ? currentUrls.length - urlsToSubmit.length : 0,
+      isIncremental,
+      forceSubmit,
       status: response.status,
       statusText: response.statusText,
       responseBody: responseText,
-      urls,
+      submittedUrls: urlsToSubmit,
       endpoint: 'https://api.indexnow.org/IndexNow',
       submittedAt: new Date().toISOString()
     }), {

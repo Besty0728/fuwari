@@ -38,11 +38,11 @@ jobs:
     - name: Build site
       run: pnpm build
       
-    - name: Submit to IndexNow
+    - name: Submit to IndexNow (Incremental)
       run: |
-        echo "Starting IndexNow submission..."
-        if pnpm submit-indexnow; then
-          echo "✅ IndexNow submission successful"
+        echo "Starting IndexNow incremental submission..."
+        if pnpm submit-indexnow-inc; then
+          echo "✅ IndexNow incremental submission successful"
         else
           echo "❌ IndexNow submission failed, but continuing..."
           exit 0  # 不让工作流失败
