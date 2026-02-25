@@ -295,6 +295,16 @@ jobs:
           fi
 
           gh pr comment ${{ github.event.pull_request.number }} --body "$BODY"
+
+          # Ensure labels exist, then add/remove
+          REPO="${{ github.repository }}"
+          API="https://api.github.com/repos/${REPO}/labels"
+          for L in "✅ 验证通过" "❌ 验证未通过"; do
+            curl -s -X POST "$API" \
+              -H "Authorization: token $GH_TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -d "{\"name\":\"$L\",\"color\":\"ededed\"}" > /dev/null 2>&1 || true
+          done
           gh pr edit ${{ github.event.pull_request.number }} --add-label "$LABEL_ADD" 2>/dev/null || true
           gh pr edit ${{ github.event.pull_request.number }} --remove-label "$LABEL_REMOVE" 2>/dev/null || true
         env:
