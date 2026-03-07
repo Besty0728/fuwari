@@ -11,8 +11,8 @@ import type {
 import { LinkPreset } from "./types/config";
 
 export const siteConfig: SiteConfig = {
-	title: "Betsy Blog",
-	subtitle: "分享网络技术、服务器部署、Unity开发、AI技术应用与原理",
+	title: "Nyamuchi の Blog",
+	subtitle: "Ave Mujica的一名鼓手",
 	description:
 		"分享网络技术、服务器部署、Unity开发、AI技术应用与原理、作者为流转星(Betsy)",
 
@@ -117,18 +117,18 @@ export const navBarConfig: NavBarConfig = {
 
 export const profileConfig: ProfileConfig = {
 	avatar: "/images/avatar.webp", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
-	name: "流转星(Betsy)",
-	bio: ["爱我所爱，我们是彼此永远的动力"],
+	name: "Amoris",
+	bio: ["こんにちにゃむにゃむ〜♪"],
 	links: [
 		{
 			name: "Bilibli",
 			icon: "fa6-brands:bilibili",
-			url: "https://space.bilibili.com/420378171",
+			url: "https://space.bilibili.com",
 		},
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
-			url: "https://github.com/Besty0728",
+			url: "https://github.com/Nyamuchi123",
 		},
 	],
 };
@@ -156,7 +156,7 @@ export const umamiConfig: UmamiConfig = {
 // 防盗链/域名保护配置
 export const antiLeechConfig: AntiLeechConfig = {
 	enable: true,
-	officialSites: [{ url: "https://www.micostar.cc", name: "主站" }],
+	officialSites: [{ url: "https://http://blog.nyamuchi.us.ci", name: "主站" }],
 	debug: false,
 	warningTitle: "⚠️ 域名安全警告",
 	warningMessage:
