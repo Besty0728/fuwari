@@ -1,6 +1,7 @@
 ---
 title: Win系统-Mac系统的使用感受+软件推荐
 published: 2026-07-16T21:02:02
+updated: 2026-07-17T14:22:02
 description: '本文介绍从Win电脑上手Mac电脑的一些基础操作、软件推荐'
 image: '/images/win-mac.webp'
 tags: [Windows,Mac]
@@ -63,8 +64,8 @@ mac 上面的快捷键会更多地用于日常操作，熟练使用快捷键会�
 ### 到手建议修改设置
 - 触控板-点按力度改为弱、追踪速度建议倒数第二档即可、轻点以点按开启
 - 访达开启显示隐藏内容（Command+Shift+.）
-![访达设置图片](/images/win-mac1.webp)
 - 访达显示所有文件扩展名开启
+- ![访达设置图片](/images/win-mac1.webp)
 - 隐私与安全性底部，允许来源应用程序改为 App Store与已知开发者
 
 ### 安装&卸载应用
@@ -81,7 +82,7 @@ mac 上面的快捷键会更多地用于日常操作，熟练使用快捷键会�
 
 ## 2.Loop窗口管理
 可以提供非常方便的快速分屏应用，自定义后的Command+Control+小方向键非常直观的反映
-::github{repo="BMrKai77/Loop"}
+::github{repo="mrkai77/Loop"}
 
 ## 3.Maccy粘贴板管理
 让你可以更方便使用粘贴板，支持查看之前粘贴过的
