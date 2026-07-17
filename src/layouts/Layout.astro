@@ -182,12 +182,15 @@ const bannerOffset =
 			offset = offset - offset % 4;
 			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
 
-			// 根据横竖屏设置默认固定背景图
+			// 根据横竖屏设置默认固定背景图；若用户已切换为随机背景模式（localStorage 持久化），首屏直接使用随机背景，避免先闪固定背景
 			const htmlRoot = document.documentElement;
 			const isLandscape = window.matchMedia('(orientation: landscape)').matches;
 			const fixedLandscape = htmlRoot.dataset.bgFixedLandscape || htmlRoot.dataset.bgFixed;
 			const fixedPortrait = htmlRoot.dataset.bgFixedPortrait || htmlRoot.dataset.bgFixed;
-			const initialBgUrl = isLandscape ? fixedLandscape : fixedPortrait;
+			let initialBgUrl = isLandscape ? fixedLandscape : fixedPortrait;
+			if (localStorage.getItem('bg-mode') === 'random' && htmlRoot.dataset.bgRandom) {
+				initialBgUrl = htmlRoot.dataset.bgRandom;
+			}
 			if (initialBgUrl) {
 				// 注意：--bg-url 会被 define:vars 同时内联到 <body>，导致 body::before 就近取到 <body> 的值而非这里设在 <html> 的值。
 				// 因此改用 body 不会覆盖的 --bg-url-active，body::before 通过 var(--bg-url-active, var(--bg-url)) 继承它。

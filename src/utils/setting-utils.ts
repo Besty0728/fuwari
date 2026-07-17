@@ -57,3 +57,14 @@ export function setTheme(theme: LIGHT_DARK_MODE): void {
 export function getStoredTheme(): LIGHT_DARK_MODE {
 	return (localStorage.getItem("theme") as LIGHT_DARK_MODE) || DEFAULT_THEME;
 }
+
+export type BgMode = "fixed" | "random";
+
+// 背景模式持久化：默认固定背景，用户手动切换到随机背景后跨页面/跨会话保持
+export function getStoredBgMode(): BgMode {
+	return localStorage.getItem("bg-mode") === "random" ? "random" : "fixed";
+}
+
+export function setStoredBgMode(mode: BgMode): void {
+	localStorage.setItem("bg-mode", mode);
+}

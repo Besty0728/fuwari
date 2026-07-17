@@ -1,8 +1,11 @@
 <script lang="ts">
 import Icon from "@iconify/svelte";
+import { getStoredBgMode, setStoredBgMode } from "@utils/setting-utils";
 import { onMount } from "svelte";
 
-let isRandom = false;
+// client:only 组件只在浏览器运行，初始化时即可读取 localStorage。
+// Swup 导航会销毁并重建本组件，从存储恢复状态可保证随机模式不被重置。
+let isRandom = getStoredBgMode() === "random";
 let button: HTMLButtonElement;
 
 // --bg-url 会被 Layout 的 define:vars 内联到 <body>，直接写 <html> 的 --bg-url 会被遮蔽。
@@ -50,12 +53,12 @@ function updateBackground() {
 
 function toggleRandom() {
 	isRandom = !isRandom;
+	setStoredBgMode(isRandom ? "random" : "fixed");
 	updateBackground();
 }
 
 onMount(() => {
-	// 默认固定背景，isRandom 已经是 false
-	// 组件挂载后做一次初始化，确保当前模式与背景一致
+	// 组件挂载后按持久化的模式同步一次背景（Swup 重挂载时恢复随机背景）
 	updateBackground();
 
 	// 横竖屏切换时，若当前为固定背景则自动切换到对应方向的图片
