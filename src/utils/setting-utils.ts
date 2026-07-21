@@ -68,3 +68,95 @@ export function getStoredBgMode(): BgMode {
 export function setStoredBgMode(mode: BgMode): void {
 	localStorage.setItem("bg-mode", mode);
 }
+
+// 随机背景横竖屏感知：按屏幕方向加载对应方向的图片，iPad 横屏、桌面窄窗口等 UA 与方向不一致的场景也能尽力匹配
+export function getOrientation(): "landscape" | "portrait" {
+	return window.matchMedia("(orientation: landscape)").matches
+		? "landscape"
+		: "portrait";
+}
+
+const RANDOM_BG_CACHE_KEY = {
+	landscape: "bg-random-url-landscape",
+	portrait: "bg-random-url-portrait",
+} as const;
+
+export function getCachedRandomBgUrl(
+	orientation: "landscape" | "portrait",
+): string | null {
+	try {
+		return sessionStorage.getItem(RANDOM_BG_CACHE_KEY[orientation]);
+	} catch {
+		return null;
+	}
+}
+
+function setCachedRandomBgUrl(
+	orientation: "landscape" | "portrait",
+	url: string,
+): void {
+	try {
+		sessionStorage.setItem(RANDOM_BG_CACHE_KEY[orientation], url);
+	} catch {
+		// 隐私模式等存储失败不致命，继续运行
+	}
+}
+
+function appendTimestamp(url: string): string {
+	const separator = url.includes("?") ? "&_t=" : "?_t=";
+	return `${url}${separator}${Date.now()}`;
+}
+
+function isLandscapeImage(img: HTMLImageElement): boolean {
+	return img.naturalWidth >= img.naturalHeight;
+}
+
+// 用隐藏 Image 探测实际加载到的图片方向，最多重试 3 次，保证 callback 只调用一次
+export function prepareRandomBgUrl(
+	randomSrc: string,
+	isLandscape: boolean,
+	callback: (url: string) => void,
+): void {
+	const orientation = isLandscape ? "landscape" : "portrait";
+	const cached = getCachedRandomBgUrl(orientation);
+	if (cached) {
+		callback(cached);
+		return;
+	}
+
+	let attempts = 0;
+	const maxAttempts = 3;
+
+	function tryLoad() {
+		attempts += 1;
+		const probeUrl = appendTimestamp(randomSrc);
+		const img = new Image();
+
+		img.onload = () => {
+			if (isLandscapeImage(img) === isLandscape) {
+				setCachedRandomBgUrl(orientation, probeUrl);
+				callback(probeUrl);
+				return;
+			}
+			if (attempts < maxAttempts) {
+				tryLoad();
+			} else {
+				// 尽力重试后仍不匹配，使用最后一次 URL，保证有背景显示
+				callback(probeUrl);
+			}
+		};
+
+		img.onerror = () => {
+			if (attempts < maxAttempts) {
+				tryLoad();
+			} else {
+				// 多次失败后用裸 randomSrc，避免无背景
+				callback(randomSrc);
+			}
+		};
+
+		img.src = probeUrl;
+	}
+
+	tryLoad();
+}

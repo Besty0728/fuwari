@@ -177,30 +177,91 @@ const bannerOffset =
 			const hue = localStorage.getItem('hue') || configHue;
 			document.documentElement.style.setProperty('--hue', hue);
 
-			// calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
-			let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
-			offset = offset - offset % 4;
-			document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+				// calculate the --banner-height-extend, which needs to be a multiple of 4 to avoid blurry text
+				let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
+				offset = offset - offset % 4;
+				document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
 
-			// 根据横竖屏设置默认固定背景图；若用户已切换为随机背景模式（localStorage 持久化），首屏直接使用随机背景，避免先闪固定背景
-			const htmlRoot = document.documentElement;
-			const isLandscape = window.matchMedia('(orientation: landscape)').matches;
-			const fixedLandscape = htmlRoot.dataset.bgFixedLandscape || htmlRoot.dataset.bgFixed;
-			const fixedPortrait = htmlRoot.dataset.bgFixedPortrait || htmlRoot.dataset.bgFixed;
-			let initialBgUrl = isLandscape ? fixedLandscape : fixedPortrait;
-			if (localStorage.getItem('bg-mode') === 'random' && htmlRoot.dataset.bgRandom) {
-				initialBgUrl = htmlRoot.dataset.bgRandom;
-			}
-			if (initialBgUrl) {
-				// 注意：--bg-url 会被 define:vars 同时内联到 <body>，导致 body::before 就近取到 <body> 的值而非这里设在 <html> 的值。
-				// 因此改用 body 不会覆盖的 --bg-url-active，body::before 通过 var(--bg-url-active, var(--bg-url)) 继承它。
-				htmlRoot.style.setProperty('--bg-url-active', `url(${initialBgUrl})`);
-			}
+				// 根据横竖屏设置默认固定背景图；若用户已切换为随机背景模式（localStorage 持久化），首屏直接使用随机背景，避免先闪固定背景
+				const htmlRoot = document.documentElement;
+				const isLandscape = window.matchMedia('(orientation: landscape)').matches;
+				const fixedLandscape = htmlRoot.dataset.bgFixedLandscape || htmlRoot.dataset.bgFixed;
+				const fixedPortrait = htmlRoot.dataset.bgFixedPortrait || htmlRoot.dataset.bgFixed;
+				let initialBgUrl = isLandscape ? fixedLandscape : fixedPortrait;
+				const randomSrc = htmlRoot.dataset.bgRandom;
+				const bgMode = localStorage.getItem('bg-mode');
+				const randomCacheKey = isLandscape ? 'bg-random-url-landscape' : 'bg-random-url-portrait';
+				let randomCachedUrl = null;
+				try {
+					randomCachedUrl = sessionStorage.getItem(randomCacheKey);
+				} catch (e) {
+					randomCachedUrl = null;
+				}
 
-			// Background image loading detection with mobile support and fallback
-			const bgUrl = (getComputedStyle(document.documentElement).getPropertyValue('--bg-url-active').trim()
-				|| getComputedStyle(document.documentElement).getPropertyValue('--bg-url').trim());
-			const bgEnable = getComputedStyle(document.documentElement).getPropertyValue('--bg-enable').trim();
+				function setActiveBgUrl(url) {
+					htmlRoot.style.setProperty('--bg-url-active', 'url(' + url + ')');
+				}
+
+				function appendTs(url) {
+					return url + (url.indexOf('?') !== -1 ? '&_t=' : '?_t=') + Date.now();
+				}
+
+				function isLandscapeImage(img) {
+					return img.naturalWidth >= img.naturalHeight;
+				}
+
+				function probeRandomBg(targetLandscape) {
+					var attempts = 0;
+					var maxAttempts = 3;
+					function tryLoad() {
+						attempts += 1;
+						var probeUrl = appendTs(randomSrc);
+						var img = new Image();
+						img.onload = function() {
+							if (isLandscapeImage(img) === targetLandscape) {
+								try {
+									sessionStorage.setItem(randomCacheKey, probeUrl);
+								} catch (e) {}
+								setActiveBgUrl(probeUrl);
+								return;
+							}
+							if (attempts < maxAttempts) {
+								tryLoad();
+							} else {
+								setActiveBgUrl(probeUrl);
+							}
+						};
+						img.onerror = function() {
+							if (attempts < maxAttempts) {
+								tryLoad();
+							} else {
+								setActiveBgUrl(randomSrc);
+							}
+						};
+						img.src = probeUrl;
+					}
+					tryLoad();
+				}
+
+				if (bgMode === 'random' && randomSrc) {
+					if (randomCachedUrl) {
+						initialBgUrl = randomCachedUrl;
+					} else {
+						initialBgUrl = randomSrc;
+						// 先显示裸 randomSrc 避免白屏，同时后台探测方向匹配的图片
+						probeRandomBg(isLandscape);
+					}
+				}
+				if (initialBgUrl) {
+					// 注意：--bg-url 会被 define:vars 同时内联到 <body>，导致 body::before 就近取到 <body> 的值而非这里设在 <html> 的值。
+					// 因此改用 body 不会覆盖的 --bg-url-active，body::before 通过 var(--bg-url-active, var(--bg-url)) 继承它。
+					htmlRoot.style.setProperty('--bg-url-active', 'url(' + initialBgUrl + ')');
+				}
+
+				// Background image loading detection with mobile support and fallback
+				const bgUrl = (getComputedStyle(document.documentElement).getPropertyValue('--bg-url-active').trim()
+					|| getComputedStyle(document.documentElement).getPropertyValue('--bg-url').trim());
+				const bgEnable = getComputedStyle(document.documentElement).getPropertyValue('--bg-enable').trim();
 			
 			//console.log('[BG Debug] URL:', bgUrl, 'Enable:', bgEnable);
 			

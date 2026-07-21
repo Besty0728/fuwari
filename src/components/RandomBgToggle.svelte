@@ -1,6 +1,6 @@
 <script lang="ts">
 import Icon from "@iconify/svelte";
-import { getStoredBgMode, setStoredBgMode } from "@utils/setting-utils";
+import { getStoredBgMode, getOrientation, prepareRandomBgUrl, setStoredBgMode } from "@utils/setting-utils";
 import { onMount } from "svelte";
 
 // client:only 组件只在浏览器运行，初始化时即可读取 localStorage。
@@ -35,7 +35,16 @@ function getCurrentFixedUrl(): string | null {
 
 function updateBackground() {
 	const { random } = getBgUrls();
-	const targetUrl = isRandom ? random : getCurrentFixedUrl();
+	if (isRandom && random) {
+		prepareRandomBgUrl(random, window.matchMedia('(orientation: landscape)').matches, (url) => {
+			if (!isRandom) return;
+			document.documentElement.style.setProperty(FIXED_BG, `url(${url})`);
+			document.documentElement.style.setProperty(CARD_BG, "var(--card-bg-transparent)");
+			document.documentElement.style.setProperty(FLOAT_PANEL_BG, "var(--float-panel-bg-transparent)");
+		});
+		return;
+	}
+	const targetUrl = getCurrentFixedUrl();
 	if (!targetUrl) return;
 
 	document.documentElement.style.setProperty(FIXED_BG, `url(${targetUrl})`);
@@ -61,12 +70,10 @@ onMount(() => {
 	// 组件挂载后按持久化的模式同步一次背景（Swup 重挂载时恢复随机背景）
 	updateBackground();
 
-	// 横竖屏切换时，若当前为固定背景则自动切换到对应方向的图片
+	// 横竖屏切换时自动切换到对应方向的图片（固定模式按方向选固定图，随机模式重新探测）
 	const mediaQuery = window.matchMedia('(orientation: landscape)');
 	const handleOrientationChange = () => {
-		if (!isRandom) {
-			updateBackground();
-		}
+		updateBackground();
 	};
 	mediaQuery.addEventListener('change', handleOrientationChange);
 
