@@ -2,8 +2,8 @@
   "username": "Besty0728",
   "name": "Betsy",
   "avatarUrl": "https://avatars.githubusercontent.com/u/199687402?u=4e415a6ca01129238abe3bec6dbb79c3436c6e05&v=4",
-  "total": 1494,
-  "updatedAt": "2026-07-26T10:32:39.949Z",
+  "total": 1511,
+  "updatedAt": "2026-07-26T16:57:25.061Z",
   "days": [
     {
       "date": "2025-07-27",
@@ -17,12 +17,12 @@
     },
     {
       "date": "2025-07-29",
-      "count": 0,
-      "level": 0
+      "count": 1,
+      "level": 1
     },
     {
       "date": "2025-07-30",
-      "count": 8,
+      "count": 7,
       "level": 1
     },
     {
@@ -122,12 +122,12 @@
     },
     {
       "date": "2025-08-19",
-      "count": 6,
+      "count": 7,
       "level": 1
     },
     {
       "date": "2025-08-20",
-      "count": 5,
+      "count": 4,
       "level": 1
     },
     {
@@ -352,12 +352,12 @@
     },
     {
       "date": "2025-10-04",
-      "count": 1,
+      "count": 2,
       "level": 1
     },
     {
       "date": "2025-10-05",
-      "count": 15,
+      "count": 14,
       "level": 2
     },
     {
@@ -1617,12 +1617,12 @@
     },
     {
       "date": "2026-06-14",
-      "count": 2,
+      "count": 3,
       "level": 1
     },
     {
       "date": "2026-06-15",
-      "count": 9,
+      "count": 8,
       "level": 1
     },
     {
@@ -1762,13 +1762,13 @@
     },
     {
       "date": "2026-07-13",
-      "count": 5,
+      "count": 6,
       "level": 1
     },
     {
       "date": "2026-07-14",
-      "count": 1,
-      "level": 1
+      "count": 0,
+      "level": 0
     },
     {
       "date": "2026-07-15",
@@ -1807,12 +1807,12 @@
     },
     {
       "date": "2026-07-22",
-      "count": 0,
-      "level": 0
+      "count": 1,
+      "level": 1
     },
     {
       "date": "2026-07-23",
-      "count": 7,
+      "count": 6,
       "level": 1
     },
     {
@@ -1827,8 +1827,8 @@
     },
     {
       "date": "2026-07-26",
-      "count": 8,
-      "level": 1
+      "count": 25,
+      "level": 2
     }
   ]
 }
