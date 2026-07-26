@@ -68,11 +68,20 @@ data.days.forEach((day, index) => {
 function tooltipOf(date: string, count: number): string {
 	return `${date}：${count > 0 ? `${count} 次贡献` : "无贡献"}`;
 }
+
+// 展示名优先用 GitHub 上设置的 name，未设置时回退为用户名
+const displayName = data.name || data.username;
+const githubProfileUrl = `https://github.com/${data.username}`;
 ---
 <div class:list={["gh-contrib card-base p-4 sm:p-5", className]} data-palette="theme">
-    <div class="flex items-center justify-between mb-4">
-        <div class="text-sm font-bold text-75">
-            过去一年共 <span class="text-[var(--primary)]">{data.total.toLocaleString()}</span> 次贡献
+    <div class="flex items-center gap-3 mb-4">
+        <a href={githubProfileUrl} target="_blank" rel="noopener"
+           class="shrink-0 rounded-full overflow-hidden w-10 h-10 ring-1 ring-[var(--line-divider)] transition hover:ring-[var(--primary)]">
+            <img src={data.avatarUrl} alt={`${displayName} 的 GitHub 头像`} width="40" height="40" class="w-full h-full object-cover" loading="lazy" decoding="async" />
+        </a>
+        <div class="min-w-0 flex-1">
+            <a href={githubProfileUrl} target="_blank" rel="noopener" class="font-bold text-sm text-90 hover:text-[var(--primary)] transition truncate block">{displayName}</a>
+            <div class="text-xs text-30">过去一年共 <span class="text-[var(--primary)] font-medium">{data.total.toLocaleString()}</span> 次贡献</div>
         </div>
         <button
             type="button"

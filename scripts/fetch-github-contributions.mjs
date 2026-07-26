@@ -42,6 +42,8 @@ async function fetchFromGraphQL(token) {
 	const query = `
 		query($login: String!) {
 			user(login: $login) {
+				name
+				avatarUrl
 				contributionsCollection {
 					contributionCalendar {
 						totalContributions
@@ -80,8 +82,8 @@ async function fetchFromGraphQL(token) {
 		throw new Error(`GraphQL 返回错误: ${JSON.stringify(json.errors)}`);
 	}
 
-	const calendar =
-		json.data?.user?.contributionsCollection?.contributionCalendar;
+	const user = json.data?.user;
+	const calendar = user?.contributionsCollection?.contributionCalendar;
 	if (!calendar) {
 		throw new Error("GraphQL 响应缺少 contributionCalendar 字段");
 	}
@@ -94,7 +96,12 @@ async function fetchFromGraphQL(token) {
 		})),
 	);
 
-	return { total: calendar.totalContributions, days };
+	return {
+		name: user.name || null,
+		avatarUrl: user.avatarUrl || `https://github.com/${USERNAME}.png`,
+		total: calendar.totalContributions,
+		days,
+	};
 }
 
 /**
@@ -117,7 +124,14 @@ async function fetchFromJogruber() {
 		level: day.level,
 	}));
 
-	return { total: json.total?.lastYear ?? 0, days };
+	// jogruber 接口不返回展示名和头像，展示名留空由前端回退为用户名，
+	// 头像直接用 GitHub 的免鉴权头像地址（稳定、无需 token）。
+	return {
+		name: null,
+		avatarUrl: `https://github.com/${USERNAME}.png`,
+		total: json.total?.lastYear ?? 0,
+		days,
+	};
 }
 
 /**
@@ -126,6 +140,7 @@ async function fetchFromJogruber() {
 function isValid(result) {
 	if (!result || !Array.isArray(result.days)) return false;
 	if (result.days.length < 300 || result.days.length > 400) return false;
+	if (typeof result.avatarUrl !== "string" || !result.avatarUrl) return false;
 	return result.days.every(
 		(d) =>
 			typeof d.date === "string" &&
@@ -147,6 +162,8 @@ function writeResult(result) {
 	mkdirSync(dirname(OUTPUT_PATH), { recursive: true });
 	const data = {
 		username: USERNAME,
+		name: result.name,
+		avatarUrl: result.avatarUrl,
 		total: result.total,
 		updatedAt: new Date().toISOString(),
 		days: result.days,
