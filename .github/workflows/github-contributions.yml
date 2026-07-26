@@ -1,0 +1,45 @@
+name: Update GitHub Contributions
+
+on:
+  schedule:
+    - cron: '0 16 * * *' # UTC 16:00 = Beijing 00:00
+  workflow_dispatch:
+
+concurrency:
+  group: github-contributions-main
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  update-contributions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch GitHub contributions data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: node scripts/fetch-github-contributions.mjs
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/github-contributions.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore: update github contributions data"
+          git pull --rebase origin main
+          git push origin HEAD:main
