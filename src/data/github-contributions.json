@@ -3,7 +3,7 @@
   "name": "Betsy",
   "avatarUrl": "https://avatars.githubusercontent.com/u/199687402?u=4e415a6ca01129238abe3bec6dbb79c3436c6e05&v=4",
   "total": 1605,
-  "updatedAt": "2026-08-05T17:26:41.227Z",
+  "updatedAt": "2026-08-07T16:51:59.285Z",
   "days": [
     {
       "date": "2025-08-03",
@@ -1844,6 +1844,16 @@
       "date": "2026-08-05",
       "count": 2,
       "level": 1
+    },
+    {
+      "date": "2026-08-06",
+      "count": 0,
+      "level": 0
+    },
+    {
+      "date": "2026-08-07",
+      "count": 0,
+      "level": 0
     }
   ]
 }
