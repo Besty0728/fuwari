@@ -21,15 +21,15 @@ jobs:
     
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
-      
+      uses: actions/checkout@v7
+
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
-        node-version: '18'
+        node-version: '22'
         
     - name: Setup pnpm
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@v6
       with:
         version: 9.15.9
         
@@ -38,7 +38,7 @@ jobs:
 
     # 恢复上次的提交记录缓存
     - name: Restore IndexNow submission cache
-      uses: actions/cache/restore@v4
+      uses: actions/cache/restore@v6
       id: cache-restore
       with:
         path: .indexnow-submitted.json
@@ -74,7 +74,7 @@ jobs:
 
     # 保存更新后的提交记录到缓存
     - name: Save IndexNow submission cache
-      uses: actions/cache/save@v4
+      uses: actions/cache/save@v6
       if: always()
       with:
         path: .indexnow-submitted.json
