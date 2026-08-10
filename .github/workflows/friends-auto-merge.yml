@@ -14,7 +14,7 @@ jobs:
     if: github.repository_owner == 'Besty0728'
     steps:
       - name: Checkout Base (safe context)
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.base.sha }}
           fetch-depth: 0
@@ -57,7 +57,7 @@ jobs:
 
       - name: Checkout PR Head
         if: steps.verify.outputs.status == 'pass'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 0
@@ -169,13 +169,13 @@ jobs:
 
       - name: Install pnpm
         if: steps.gate.outputs.status == 'pass'
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Set up Node.js
         if: steps.gate.outputs.status == 'pass'
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: 22
           cache: "pnpm"
 
       - name: Install dependencies
