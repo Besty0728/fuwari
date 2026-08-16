@@ -2,44 +2,9 @@
   "username": "Besty0728",
   "name": "Betsy",
   "avatarUrl": "https://avatars.githubusercontent.com/u/199687402?u=4e415a6ca01129238abe3bec6dbb79c3436c6e05&v=4",
-  "total": 1656,
-  "updatedAt": "2026-08-15T16:20:24.325Z",
+  "total": 1669,
+  "updatedAt": "2026-08-16T16:21:04.188Z",
   "days": [
-    {
-      "date": "2025-08-10",
-      "count": 1,
-      "level": 1
-    },
-    {
-      "date": "2025-08-11",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-08-12",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-08-13",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-08-14",
-      "count": 5,
-      "level": 1
-    },
-    {
-      "date": "2025-08-15",
-      "count": 16,
-      "level": 2
-    },
-    {
-      "date": "2025-08-16",
-      "count": 0,
-      "level": 0
-    },
     {
       "date": "2025-08-17",
       "count": 11,
@@ -1859,6 +1824,11 @@
       "date": "2026-08-15",
       "count": 6,
       "level": 1
+    },
+    {
+      "date": "2026-08-16",
+      "count": 13,
+      "level": 2
     }
   ]
 }
