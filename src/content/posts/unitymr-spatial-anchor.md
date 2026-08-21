@@ -346,6 +346,6 @@ public class DebugInfoManager : MonoBehaviour
 
 <u>**请注意房主再放置锚点后要细细观察锚点周围的空间，尽量保持平稳角度，确保上传是缓慢进行的，一般一下子上传完成均不准；客户端在确认房主上传完毕后请仔细以房主视角观察**</u>
 
-::link{url="https://space.micostar.tech" title="Spatial Alignment Visualizer" description="空间锚点对齐算法的交互式可视化演示工具，帮助理解坐标系变换原理。访问密码：pico"}
+::link{url="https://unity-web2.vercel.app" title="Spatial Alignment Visualizer" description="空间锚点对齐算法的交互式可视化演示工具，帮助理解坐标系变换原理。访问密码：pico"}
 
 ![空间锚点对齐效果演示](/images/unitysp4.webp)
