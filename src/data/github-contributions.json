@@ -2,44 +2,9 @@
   "username": "Besty0728",
   "name": "Betsy",
   "avatarUrl": "https://avatars.githubusercontent.com/u/199687402?u=4e415a6ca01129238abe3bec6dbb79c3436c6e05&v=4",
-  "total": 1734,
-  "updatedAt": "2026-08-29T19:10:55.765Z",
+  "total": 1723,
+  "updatedAt": "2026-08-30T19:02:00.927Z",
   "days": [
-    {
-      "date": "2025-08-24",
-      "count": 4,
-      "level": 1
-    },
-    {
-      "date": "2025-08-25",
-      "count": 2,
-      "level": 1
-    },
-    {
-      "date": "2025-08-26",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-08-27",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-08-28",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-08-29",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-08-30",
-      "count": 0,
-      "level": 0
-    },
     {
       "date": "2025-08-31",
       "count": 0,
@@ -1842,22 +1807,27 @@
     },
     {
       "date": "2026-08-26",
-      "count": 9,
-      "level": 1
-    },
-    {
-      "date": "2026-08-27",
-      "count": 8,
-      "level": 1
-    },
-    {
-      "date": "2026-08-28",
       "count": 6,
       "level": 1
     },
     {
+      "date": "2026-08-27",
+      "count": 6,
+      "level": 1
+    },
+    {
+      "date": "2026-08-28",
+      "count": 5,
+      "level": 1
+    },
+    {
       "date": "2026-08-29",
-      "count": 12,
+      "count": 4,
+      "level": 1
+    },
+    {
+      "date": "2026-08-30",
+      "count": 3,
       "level": 1
     }
   ]
