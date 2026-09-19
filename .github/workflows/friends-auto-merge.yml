@@ -22,7 +22,8 @@ jobs:
       - name: Verify Changed Files
         id: verify
         run: |
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }})
+          git fetch origin pull/${{ github.event.pull_request.number }}/head:pr-head
+          CHANGED_FILES=$(git diff --name-only ${{ github.event.pull_request.base.sha }} pr-head)
           echo "Changed files:"
           echo "$CHANGED_FILES"
 
@@ -59,7 +60,7 @@ jobs:
         if: steps.verify.outputs.status == 'pass'
         uses: actions/checkout@v7
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: refs/pull/${{ github.event.pull_request.number }}/head
           fetch-depth: 0
 
       - name: Validate JSON Content
