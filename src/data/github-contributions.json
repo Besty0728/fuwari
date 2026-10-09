@@ -2,8 +2,8 @@
   "username": "Besty0728",
   "name": "Betsy",
   "avatarUrl": "https://avatars.githubusercontent.com/u/199687402?u=4e415a6ca01129238abe3bec6dbb79c3436c6e05&v=4",
-  "total": 2001,
-  "updatedAt": "2026-10-08T21:01:15.802Z",
+  "total": 1956,
+  "updatedAt": "2026-10-09T20:32:22.846Z",
   "days": [
     {
       "date": "2025-10-05",
@@ -252,8 +252,8 @@
     },
     {
       "date": "2025-11-23",
-      "count": 6,
-      "level": 1
+      "count": 0,
+      "level": 0
     },
     {
       "date": "2025-11-24",
@@ -437,7 +437,7 @@
     },
     {
       "date": "2025-12-30",
-      "count": 17,
+      "count": 12,
       "level": 1
     },
     {
@@ -447,17 +447,17 @@
     },
     {
       "date": "2026-01-01",
-      "count": 28,
-      "level": 2
+      "count": 3,
+      "level": 1
     },
     {
       "date": "2026-01-02",
-      "count": 18,
+      "count": 16,
       "level": 1
     },
     {
       "date": "2026-01-03",
-      "count": 4,
+      "count": 1,
       "level": 1
     },
     {
@@ -517,8 +517,8 @@
     },
     {
       "date": "2026-01-15",
-      "count": 7,
-      "level": 1
+      "count": 0,
+      "level": 0
     },
     {
       "date": "2026-01-16",
@@ -527,7 +527,7 @@
     },
     {
       "date": "2026-01-17",
-      "count": 5,
+      "count": 2,
       "level": 1
     },
     {
@@ -552,7 +552,7 @@
     },
     {
       "date": "2026-01-22",
-      "count": 17,
+      "count": 16,
       "level": 1
     },
     {
@@ -607,7 +607,7 @@
     },
     {
       "date": "2026-02-02",
-      "count": 7,
+      "count": 2,
       "level": 1
     },
     {
@@ -642,7 +642,7 @@
     },
     {
       "date": "2026-02-09",
-      "count": 19,
+      "count": 18,
       "level": 1
     },
     {
@@ -662,7 +662,7 @@
     },
     {
       "date": "2026-02-13",
-      "count": 15,
+      "count": 12,
       "level": 1
     },
     {
@@ -1102,7 +1102,7 @@
     },
     {
       "date": "2026-05-12",
-      "count": 10,
+      "count": 9,
       "level": 1
     },
     {
@@ -1848,6 +1848,11 @@
     {
       "date": "2026-10-08",
       "count": 1,
+      "level": 1
+    },
+    {
+      "date": "2026-10-09",
+      "count": 17,
       "level": 1
     }
   ]
