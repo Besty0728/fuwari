@@ -112,33 +112,6 @@ const jsonLd = {
                 <ImageWrapper id="post-cover" src={entry.data.image} alt={entry.data.title} basePath={path.join("content/posts/", getDir(entry.id))} class="mb-8 rounded-xl banner-container onload-animation" isLCP={true}/>
             }
 
-            {entry.data.video && (
-                <div class="relative mb-8 aspect-video overflow-hidden rounded-xl bg-black">
-                    <video
-                        class="work-detail-video aspect-video w-full bg-black object-contain"
-                        data-video-ready="false"
-                        src={entry.data.video}
-                        poster={entry.data.videoPoster || entry.data.image}
-                        controls
-                        playsinline
-                        preload="none"
-                        referrerpolicy="origin"
-                    >
-                        当前浏览器不支持视频播放。
-                    </video>
-                    <button
-                        type="button"
-                        class="video-play-overlay absolute inset-0 flex items-center justify-center bg-black/20 transition hover:bg-black/10"
-                        style={(entry.data.videoPoster || entry.data.image)
-                            ? `background-image: url(${entry.data.videoPoster || entry.data.image}); background-size: cover; background-position: center;`
-                            : ""}
-                        aria-label="播放视频"
-                    >
-                        <Icon name="material-symbols:play-circle-outline-rounded" class="text-6xl text-white/90 drop-shadow-lg" />
-                    </button>
-                </div>
-            )}
-
             <Markdown class="mb-6 markdown-content onload-animation">
                 <Content />
             </Markdown>
