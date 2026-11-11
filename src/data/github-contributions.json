@@ -2,8 +2,8 @@
   "username": "Besty0728",
   "name": "Betsy",
   "avatarUrl": "https://avatars.githubusercontent.com/u/199687402?u=4e415a6ca01129238abe3bec6dbb79c3436c6e05&v=4",
-  "total": 1984,
-  "updatedAt": "2026-11-10T21:38:23.814Z",
+  "total": 2141,
+  "updatedAt": "2026-11-11T22:27:48.038Z",
   "days": [
     {
       "date": "2025-11-09",
@@ -1717,18 +1717,18 @@
     },
     {
       "date": "2026-10-17",
-      "count": 15,
-      "level": 1
+      "count": 45,
+      "level": 3
     },
     {
       "date": "2026-10-18",
-      "count": 5,
-      "level": 1
+      "count": 38,
+      "level": 2
     },
     {
       "date": "2026-10-19",
-      "count": 0,
-      "level": 0
+      "count": 2,
+      "level": 1
     },
     {
       "date": "2026-10-20",
@@ -1742,33 +1742,33 @@
     },
     {
       "date": "2026-10-22",
-      "count": 0,
-      "level": 0
+      "count": 2,
+      "level": 1
     },
     {
       "date": "2026-10-23",
-      "count": 0,
-      "level": 0
+      "count": 4,
+      "level": 1
     },
     {
       "date": "2026-10-24",
-      "count": 1,
+      "count": 9,
       "level": 1
     },
     {
       "date": "2026-10-25",
-      "count": 3,
+      "count": 13,
       "level": 1
     },
     {
       "date": "2026-10-26",
-      "count": 0,
-      "level": 0
+      "count": 7,
+      "level": 1
     },
     {
       "date": "2026-10-27",
-      "count": 0,
-      "level": 0
+      "count": 2,
+      "level": 1
     },
     {
       "date": "2026-10-28",
@@ -1777,18 +1777,18 @@
     },
     {
       "date": "2026-10-29",
-      "count": 0,
-      "level": 0
+      "count": 1,
+      "level": 1
     },
     {
       "date": "2026-10-30",
-      "count": 0,
-      "level": 0
+      "count": 6,
+      "level": 1
     },
     {
       "date": "2026-10-31",
-      "count": 0,
-      "level": 0
+      "count": 7,
+      "level": 1
     },
     {
       "date": "2026-11-01",
@@ -1807,38 +1807,43 @@
     },
     {
       "date": "2026-11-04",
-      "count": 0,
-      "level": 0
+      "count": 1,
+      "level": 1
     },
     {
       "date": "2026-11-05",
-      "count": 0,
-      "level": 0
+      "count": 1,
+      "level": 1
     },
     {
       "date": "2026-11-06",
-      "count": 0,
-      "level": 0
+      "count": 8,
+      "level": 1
     },
     {
       "date": "2026-11-07",
-      "count": 0,
-      "level": 0
+      "count": 10,
+      "level": 1
     },
     {
       "date": "2026-11-08",
-      "count": 0,
-      "level": 0
+      "count": 10,
+      "level": 1
     },
     {
       "date": "2026-11-09",
-      "count": 0,
-      "level": 0
+      "count": 3,
+      "level": 1
     },
     {
       "date": "2026-11-10",
-      "count": 0,
-      "level": 0
+      "count": 8,
+      "level": 1
+    },
+    {
+      "date": "2026-11-11",
+      "count": 4,
+      "level": 1
     }
   ]
 }
