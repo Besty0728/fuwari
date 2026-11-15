@@ -3,43 +3,8 @@
   "name": "Betsy",
   "avatarUrl": "https://avatars.githubusercontent.com/u/199687402?u=4e415a6ca01129238abe3bec6dbb79c3436c6e05&v=4",
   "total": 2160,
-  "updatedAt": "2026-11-14T20:24:32.709Z",
+  "updatedAt": "2026-11-15T20:48:59.336Z",
   "days": [
-    {
-      "date": "2025-11-09",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-11-10",
-      "count": 1,
-      "level": 1
-    },
-    {
-      "date": "2025-11-11",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-11-12",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-11-13",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-11-14",
-      "count": 0,
-      "level": 0
-    },
-    {
-      "date": "2025-11-15",
-      "count": 0,
-      "level": 0
-    },
     {
       "date": "2025-11-16",
       "count": 0,
@@ -1859,6 +1824,11 @@
       "date": "2026-11-14",
       "count": 7,
       "level": 1
+    },
+    {
+      "date": "2026-11-15",
+      "count": 0,
+      "level": 0
     }
   ]
 }
