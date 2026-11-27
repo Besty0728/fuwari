@@ -2,8 +2,8 @@
   "username": "Besty0728",
   "name": "Betsy",
   "avatarUrl": "https://avatars.githubusercontent.com/u/199687402?u=4e415a6ca01129238abe3bec6dbb79c3436c6e05&v=4",
-  "total": 2213,
-  "updatedAt": "2026-11-25T23:58:43.110Z",
+  "total": 2221,
+  "updatedAt": "2026-11-27T00:17:04.632Z",
   "days": [
     {
       "date": "2025-11-23",
@@ -1842,6 +1842,16 @@
     },
     {
       "date": "2026-11-25",
+      "count": 0,
+      "level": 0
+    },
+    {
+      "date": "2026-11-26",
+      "count": 8,
+      "level": 1
+    },
+    {
+      "date": "2026-11-27",
       "count": 0,
       "level": 0
     }
